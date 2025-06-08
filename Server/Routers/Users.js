@@ -41,8 +41,7 @@ router.post("/signin",(req,resp)=>{
             return resp.send(apiError(err))
         if(result.length!==1)
             return resp.send(apiError("invalid credential"))
-        const dbuser=result[0]
-        resp.send(apiSuccess(dbuser))
+        resp.send(apiSuccess(result[0]))
     })
 })
 
