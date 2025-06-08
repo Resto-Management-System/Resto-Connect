@@ -39,7 +39,7 @@ router.post("/signin",(req,resp)=>{
     db.query("SELECT user_id,role FROM users WHERE email=? and password=?",[email,passwd],(err,result)=>{
         if (err) 
             return resp.send(apiError(err))
-        if(result.length!=1)
+        if(result.length!==1)
             return resp.send(apiError("invalid credential"))
         const dbuser=result[0]
         resp.send(apiSuccess(dbuser))
