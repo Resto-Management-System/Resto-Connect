@@ -17,7 +17,7 @@ CREATE TABLE users (
 
 insert into users(user_id,name,email,password,phone,role)values
 (1,'Aditya Kamble','adityakamble@gmail.com','a@123',1234,'Owner'),
-(2,'Sojwal Magar','sojwalmagar@gmail.com','s@123',5678,'Owner'),
+(2,'Sojwal Magar','sojwalmagar@gmail.com','s@123',5678,'User'),
 (3,'Madhura Vyavahare','madhura@gmail.com','m@123',6789,'Owner'),
 (4,'Nishigandha Kolapkar','nishi@gmail.com','n@123',9876,'Owner');
 
