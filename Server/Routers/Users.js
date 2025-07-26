@@ -27,9 +27,9 @@ router.post("/signup/owner",upload.single("document"),(req,resp)=>{
 })
 
 router.post("/signup/user",(req,resp)=>{
-     const {Name,email,passwd,phone,role}=req.body
+     const {name,email,passwd,phone,role}=req.body
         const encPasswd = bcrypt.hashSync(passwd, 10)
-        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[Name,email,encPasswd,phone,role],(err,result)=>{
+        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[name,email,encPasswd,phone,role],(err,result)=>{
             if(err)
                 return resp.send(apiError(err))
             resp.send(apiSuccess("user register successfully"))
