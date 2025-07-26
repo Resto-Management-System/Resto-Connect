@@ -38,14 +38,14 @@ router.post("/signup/user",(req,resp)=>{
 
 router.post("/signin",(req,resp)=>{
     const {email,passwd}=req.body
-    db.query("SELECT user_id,role FROM users WHERE email=? and password=?",[email,passwd],(err,result)=>{
+    db.query("SELECT * FROM users WHERE email=?",[email],(err,result)=>{
         if(err)
             return resp.send(apiError(err))
-            //console.log("results: ", results)
-        if(results.length !== 1) // user with email not found
+            console.log("results: ", result)
+        if(result.length !== 1) // user with email not found
             return resp.send(apiError("Invalid email"))
         const dbUser = result[0]
-        const isMatching = bcrypt.compareSync(passwd, dbUser.passwd)
+        const isMatching = bcrypt.compareSync(passwd, dbUser.password)
             //console.log("is passwd matching: " , isMatching)
         if(!isMatching) // password not matching
             return resp.send(apiError("Invalid password"))
