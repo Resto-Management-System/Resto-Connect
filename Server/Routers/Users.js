@@ -31,7 +31,6 @@ router.post("/signup",(req,resp)=>{
                 return resp.send(apiError(err))
             resp.send(apiSuccess("user register successfully"))
         })
-    }
 })
 
 router.post("/signin",(req,resp)=>{
