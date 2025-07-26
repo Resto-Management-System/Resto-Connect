@@ -3,30 +3,33 @@ const {apiSuccess, apiError} = require("../utils/apiresult")
 const {createToken} = require("../utils/jwtauth")
 const express = require("express")
 const bcrypt = require("bcrypt")
+const multer = require("multer");
 const router = express.Router()
+const upload = multer({dest: "Upload/"})
 
 
-router.post("/signup",(req,resp)=>{
-    if(req.body.role=="Owner")
-    {
-        const {Name,email,passwd,phone,role,resto_name,document,location}=req.body
-        //const encPasswd = bcrypt.hashSync(passwd, 10)
-        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[Name,email,passwd,phone,role],(err,result)=>{
+router.post("/signup/owner",upload.single("document"),(req,resp)=>{
+        const {name,email,passwd,phone,role,resto_name,location}=req.body
+        const documentname = req.file ? req.file.filename : null;
+        const encPasswd = bcrypt.hashSync(passwd, 10)
+        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[name,email,encPasswd,phone,role],(err,result)=>{
             if(err)
                 return resp.send(apiError(err))
             if(result.affectedRows==1){
                 const id=result.insertId;
-                db.query("insert into restaurants(Owner_id,name,document,location) value(?,?,?,?)",[id,resto_name,document,location],(err,re)=>{
+                db.query("insert into restaurants(Owner_id,name,document,location) value(?,?,?,?)",[id,resto_name,documentname,location],(err,re)=>{
                     if(err)
                         return resp.send(apiError(err))
                     resp.send(apiSuccess("restaurant register successfully"))
                 })
             }   
         })
-    }else{
-        const {Name,email,passwd,phone,role}=req.body
-        //const encPasswd = bcrypt.hashSync(passwd, 10)
-        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[Name,email,passwd,phone,role],(err,result)=>{
+})
+
+router.post("/signup/user",(req,resp)=>{
+     const {Name,email,passwd,phone,role}=req.body
+        const encPasswd = bcrypt.hashSync(passwd, 10)
+        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[Name,email,encPasswd,phone,role],(err,result)=>{
             if(err)
                 return resp.send(apiError(err))
             resp.send(apiSuccess("user register successfully"))
@@ -36,11 +39,19 @@ router.post("/signup",(req,resp)=>{
 router.post("/signin",(req,resp)=>{
     const {email,passwd}=req.body
     db.query("SELECT user_id,role FROM users WHERE email=? and password=?",[email,passwd],(err,result)=>{
-        if (err) 
+        if(err)
             return resp.send(apiError(err))
-        if(result.length!==1)
-            return resp.send(apiError("invalid credential"))
-        resp.send(apiSuccess(result[0]))
+            //console.log("results: ", results)
+        if(results.length !== 1) // user with email not found
+            return resp.send(apiError("Invalid email"))
+        const dbUser = result[0]
+        const isMatching = bcrypt.compareSync(passwd, dbUser.passwd)
+            //console.log("is passwd matching: " , isMatching)
+        if(!isMatching) // password not matching
+            return resp.send(apiError("Invalid password"))
+            // create jwt token and add it in response
+        const token = createToken(dbUser)
+        resp.send(apiSuccess(token))
     })
 })
 
