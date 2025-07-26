@@ -33,7 +33,7 @@ CREATE TABLE restaurants (
 insert into restaurants(resto_id,owner_id,name,document,location)values
 (1,01,'Cafe Bliss','Aadhaar card','Nashik'),
 (2,02,'Cafe Goodluck','Aadhaar card','Pune'),
-(3,03,' Hotel Sai Sagar','Aadhaar card','Pune'),
+(3,03,'Hotel Sai Sagar','Aadhaar card','Pune'),
 (4,04,'Cafe Marigold','Aadhaar card','Mumbai');
 
 
