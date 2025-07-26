@@ -28,7 +28,8 @@ CREATE TABLE restaurants (
     name VARCHAR(100),
     document TEXT,
     location VARCHAR(100),
-    is_blocked TINYINT(1) DEFAULT 1
+    is_blocked TINYINT(1) DEFAULT 0
+    is_verify TINYINT(1) DEFAULT 0
 );
 
 insert into restaurants(resto_id,owner_id,name,document,location)values
