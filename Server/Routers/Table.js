@@ -22,6 +22,6 @@ router.post("/",(req,resp)=>{
 
 //get table for specific restaurant
 
-router.get("/resto/")
+//router.get("/resto/")
 
 module.exports=router;
