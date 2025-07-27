@@ -10,7 +10,7 @@ const adminRouter=require("./Routers/Admin")
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(jwtAuth);
+//app.use(jwtAuth);
 app.use("/user",userRouter);
 app.use("/resto",restoRouter);
 app.use("/table",tableRouter);
