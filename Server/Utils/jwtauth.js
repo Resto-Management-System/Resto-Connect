@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = "Sunbeam@DMCFeb2025"; // process.env.JWT_SECRET
 
 function createToken(user) {
-	const payload = { id: user.id, role: user.role };
+	const payload = { id: user.user_id, role: user.role };
 	const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
 	return token;
 }
@@ -20,8 +20,8 @@ function verifyToken(token) {
 // JWT authentication middleware -- verify the JWT token
 function jwtAuth(req, resp, next) {
 	// if url is to be allowed for all users, pass request to next.
-	const nonProtectedUrls = ["/users/signin", "/users/signup", "/books/image"];
-	if (nonProtectedUrls.indexOf(req.url) >= 0) {
+	const nonProtectedUrls = ["/user/signin", "/user/signup", "/books/image"];
+	if (nonProtectedUrls.indexOf(req.url) >=0) {
 		next();
 		return;
 	}
@@ -32,7 +32,7 @@ function jwtAuth(req, resp, next) {
 	const [bearer, token] = req.headers.authorization.split(" ");
 	// verify the token
 	const decoded = verifyToken(token);
-	console.log("incoming user token:", decoded);
+	//console.log("incoming user token:", decoded);
 	// if not valid token, return error (403)
 	if (!decoded) resp.status(403).send("Unauthoized Access - Invalid token");
 	else {
