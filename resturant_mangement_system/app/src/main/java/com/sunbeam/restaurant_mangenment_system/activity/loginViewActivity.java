@@ -1,5 +1,6 @@
 package com.sunbeam.restaurant_mangenment_system.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,6 +65,7 @@ public class loginViewActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(json);
                     String token= obj.getString("data");
                     updateToken(token);
+                    Intent intent=new Intent();
                     //textoutput.setText(token);
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);

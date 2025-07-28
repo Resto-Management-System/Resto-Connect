@@ -3,36 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.loginViewActivity">
-
+    android:gravity="center"
+    tools:context=".activity.addTableActivity">
     <TextView
-        android:text="LoginUser"
+        android:text="Add Table"
         android:textSize="20dp"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/editEmail"
-        android:hint="Enter Email "
-        android:inputType="textEmailAddress"
+        android:id="@+id/editCapcity"
+        android:inputType="number"
+        android:hint="Enter Capcity of person per table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/editPassword"
-        android:hint="Enter Password "
-        android:inputType="textPassword"
+        android:id="@+id/editCharges"
+        android:inputType="number"
+        android:hint="Enter Charges for table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/Category_options"/>
     <Button
-        android:id="@+id/buttonLogin"
-        android:onClick="Login"
-        android:text="Login"
+        android:id="@+id/buttonAddTable"
+        android:onClick="addTable"
+        android:text="Add Table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    ?
-
 </LinearLayout>
