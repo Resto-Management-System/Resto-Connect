@@ -29,7 +29,6 @@ import retrofit2.Response;
 public class loginViewActivity extends AppCompatActivity {
     EditText editEmail,editPassword;
     //TextView textoutput;
-    //String token;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
@@ -46,11 +45,8 @@ public class loginViewActivity extends AppCompatActivity {
     }
     public void updateToken(String token) {
         editor.putString("token", token);
-        editor.apply(); // Or editor.commit();
-        //Toast.makeText(this, "Token updated!"+token, Toast.LENGTH_SHORT).show();
+        editor.apply();
     }
-
-
     public void Login(View view){
         User user=new User();
         user.setEmail(editEmail.getText().toString());
@@ -68,11 +64,10 @@ public class loginViewActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(json);
                     String token= obj.getString("data");
                     updateToken(token);
-
                     //textoutput.setText(token);
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);
-                    Toast.makeText(loginViewActivity.this, "Parsing error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(loginViewActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -81,5 +76,8 @@ public class loginViewActivity extends AppCompatActivity {
                 Toast.makeText(loginViewActivity.this, "Network error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public void Change(){
+
     }
 }
