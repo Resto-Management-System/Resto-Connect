@@ -11,15 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sunbeam.restaurant_mangenment_system.Adapter.TableAdapter;
 import com.sunbeam.restaurant_mangenment_system.Class.Table;
 import com.sunbeam.restaurant_mangenment_system.R;
+import com.sunbeam.restaurant_mangenment_system.Utils.RetrofitClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class TableListFragment extends Fragment {
     RecyclerView recyclerViewTable;
     List<Table> tableList;
+    TableAdapter tableAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,11 +43,16 @@ public class TableListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerViewTable=view.findViewById(R.id.recyclerViewTable);
+        tableList=new ArrayList<>();
+        tableAdapter=new TableAdapter(getContext(),tableList);
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
+    }
+    public void getTable(){
+        RetrofitClient.getInstance().getApi().getTables()
     }
 }

@@ -2,13 +2,13 @@ package com.sunbeam.restaurant_mangenment_system.Class;
 
 public class Table {
     private int capacity;
-    private float charge;
+    private int charge;
     private String category;
 
     public Table() {
     }
 
-    public Table(int capacity, float charge, String category) {
+    public Table(int capacity, int charge, String category) {
         this.capacity = capacity;
         this.charge = charge;
         this.category = category;
@@ -22,12 +22,12 @@ public class Table {
         this.capacity = capacity;
     }
 
-    public float getCharge() {
+    public int getCharge() {
         return charge;
     }
 
-    public void setCharge(float charge) {
-        this.charge = charge;
+    public void setCharge(int charge) {
+        this.charge =  charge;
     }
 
     public String getCategory() {
