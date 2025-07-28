@@ -1,5 +1,6 @@
 package com.sunbeam.restaurant_mangenment_system.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,9 @@ import retrofit2.Response;
 public class loginViewActivity extends AppCompatActivity {
     EditText editEmail,editPassword;
     //TextView textoutput;
+    //String token;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,16 @@ public class loginViewActivity extends AppCompatActivity {
         editEmail=findViewById(R.id.editEmail);
         editPassword=findViewById(R.id.editPassword);
         //textoutput=findViewById(R.id.textoutput);
+        preferences = getSharedPreferences("Authorition", MODE_PRIVATE);
+        editor=preferences.edit();
     }
+    public void updateToken(String token) {
+        editor.putString("token", token);
+        editor.apply(); // Or editor.commit();
+        //Toast.makeText(this, "Token updated!"+token, Toast.LENGTH_SHORT).show();
+    }
+
+
     public void Login(View view){
         User user=new User();
         user.setEmail(editEmail.getText().toString());
@@ -52,24 +65,21 @@ public class loginViewActivity extends AppCompatActivity {
                     }
                     String json = response.body().string();
                     Log.d("RAW_RESPONSE", json);
-
                     JSONObject obj = new JSONObject(json);
-                    String token = obj.getString("data");
+                    String token= obj.getString("data");
+                    updateToken(token);
+
                     //textoutput.setText(token);
-
-
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);
                     Toast.makeText(loginViewActivity.this, "Parsing error", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("API_ERR", "Failed", t);
                 Toast.makeText(loginViewActivity.this, "Network error", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
