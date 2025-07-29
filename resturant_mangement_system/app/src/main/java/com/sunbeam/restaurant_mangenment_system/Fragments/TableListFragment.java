@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +38,7 @@ public class TableListFragment extends Fragment {
     RecyclerView recyclerViewTable;
     List<Table> tableList;
     TableAdapter tableAdapter;
+    Toolbar toolbar;
 
     Context getContext;
     @Override
@@ -49,8 +52,10 @@ public class TableListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if(getActivity() != null && ((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        }
         return inflater.inflate(R.layout.fragment_table_list, container, false);
-
     }
 
     @Override
@@ -59,12 +64,21 @@ public class TableListFragment extends Fragment {
         recyclerViewTable=view.findViewById(R.id.recyclerViewTable);
         tableList=new ArrayList<>();
         tableAdapter=new TableAdapter(getContext(),tableList);
+//        toolbar = view.findViewById(R.id.toolbar);
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        //getTable();
     }
 
     public void getTable(){
@@ -84,7 +98,7 @@ public class TableListFragment extends Fragment {
                     String json = response.body().string();
                     Log.d("RAW_RESPONSE", json);
                     JSONObject obj = new JSONObject(json);
-                    String token= obj.getString("data");
+
                     //Intent intent=new Intent();
                     //textoutput.setText(token);
                 } catch (Exception e) {
@@ -95,6 +109,7 @@ public class TableListFragment extends Fragment {
             }
 
             @Override
+
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("API_ERR", "Failed", t);
                 Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
