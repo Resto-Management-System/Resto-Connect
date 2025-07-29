@@ -1,10 +1,11 @@
 const express=require("express");
 const app = express();
-const cors =require("cors")
+const cors =require("cors");
 const {jwtAuth}=require("./Utils/jwtauth")
 const userRouter=require("./Routers/Users")
 const restoRouter=require("./Routers/Resto")
 const tableRouter=require("./Routers/Table")
+
 
 const reviewRouter = require("./Routers/Review")
 const menuRouter=require("./Routers/Menu")
