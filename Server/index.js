@@ -1,7 +1,7 @@
 const express=require("express");
 const app = express();
 const cors =require("cors");
-const {jwtAuth}=require("./utils/jwtauth")
+const {jwtAuth}=require("./Utils/jwtauth")
 const userRouter=require("./Routers/Users")
 const restoRouter=require("./Routers/Resto")
 const tableRouter=require("./Routers/Table")
