@@ -16,6 +16,12 @@ CREATE TABLE users (
 );
 
 insert into users(user_id,name,email,password,phone,role)values
+(1,'Aditya Kamble','adityakamble@gmail.com','a@123',1234,'Owner'),
+(2,'Sojwal Magar','sojwalmagar@gmail.com','s@123',5678,'User'),
+(3,'Madhura Vyavahare','madhura@gmail.com','m@123',6789,'Owner'),
+(4,'Nishigandha Kolapkar','nishi@gmail.com','n@123',9876,'Owner');
+
+insert into users(user_id,name,email,password,phone,role)values
 (1,'Aditya Kamble','adityakamble@gmail.com',1234,'a@123','Owner'),
 (2,'Sojwal Magar','sojwalmagar@gmail.com',5678,'s@123','Owner'),
 (3,'Madhura Vyavahare','madhura@gmail.com',6789,'m@123','Owner'),
@@ -27,14 +33,15 @@ CREATE TABLE restaurants (
     owner_id INT,
     name VARCHAR(100),
     document TEXT,
-    location VARCHAR(100)
+    location VARCHAR(100),
+    is_blocked TINYINT(1) DEFAULT 0
+    is_verify TINYINT(1) DEFAULT 0
 );
 
 insert into restaurants(resto_id,owner_id,name,document,location)values
 (1,01,'Cafe Bliss','Aadhaar card','Nashik'),
-(2,02,'Cafe Goodluck','Aadhaar card','Pune'),
-(3,03,'Hotel Sai Sagar','Aadhaar card','Pune'),
-(4,04,'Cafe Marigold','Aadhaar card','Mumbai');
+(2,03,'Hotel Sai Sagar','Aadhaar card','Pune'),
+(3,04,'Cafe Marigold','Aadhaar card','Mumbai');
 
 
 -- 3. Menu Items

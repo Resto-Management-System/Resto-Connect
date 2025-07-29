@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Category_options">
+        <item>Gold</item>
+        <item>Silver</item>
+        <item>Premium</item>
+    </string-array>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">restaurant_mangenment_system</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <style name="Base.Theme.Restaurant_mangenment_system" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.Restaurant_mangenment_system" parent="Base.Theme.Restaurant_mangenment_system"/>
+</resources>
