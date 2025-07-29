@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class PrefsHelper {
-    private static final String PREF_NAME = "MyPref";
+    private static final String PREF_NAME = "Authorization";
 
     public static void saveToken(Context context, String token) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

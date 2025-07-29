@@ -55,7 +55,7 @@ public class addTableActivity extends AppCompatActivity {
         }
         Table table=new Table();
         table.setCapacity(Integer.parseInt(capacityStr));
-        table.setCharge(Float.parseFloat(chargesStr));
+        table.setCharge(Integer.parseInt(chargesStr));
         table.setCategory(selectedCategory);
         Toast.makeText(this,""+table.toString(),Toast.LENGTH_SHORT).show();
     }

@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.sunbeam.restaurant_mangenment_system.Class.PrefsHelper;
 import com.sunbeam.restaurant_mangenment_system.Class.User;
 import com.sunbeam.restaurant_mangenment_system.R;
 import com.sunbeam.restaurant_mangenment_system.Utils.RetrofitClient;
@@ -32,6 +33,7 @@ public class loginViewActivity extends AppCompatActivity {
     //TextView textoutput;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    PrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,14 @@ public class loginViewActivity extends AppCompatActivity {
         editEmail=findViewById(R.id.editEmail);
         editPassword=findViewById(R.id.editPassword);
         //textoutput=findViewById(R.id.textoutput);
-        preferences = getSharedPreferences("Authorition", MODE_PRIVATE);
-        editor=preferences.edit();
+        prefsHelper=new PrefsHelper();
+//        preferences = getSharedPreferences("Authorition", MODE_PRIVATE);
+//        editor=preferences.edit();
     }
     public void updateToken(String token) {
-        editor.putString("token", token);
-        editor.apply();
+        prefsHelper.saveToken(this,token);
+//        editor.putString("token", token);
+//        editor.apply();
     }
     public void Login(View view){
         User user=new User();
@@ -65,7 +69,7 @@ public class loginViewActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(json);
                     String token= obj.getString("data");
                     updateToken(token);
-                    Intent intent=new Intent();
+                    //Intent intent=new Intent();
                     //textoutput.setText(token);
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);
