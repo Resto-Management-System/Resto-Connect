@@ -41,7 +41,7 @@ router.post("/signin",(req,resp)=>{
     db.query("SELECT * FROM users WHERE email=?",[email],(err,result)=>{
         if(err)
             return resp.send(apiError(err))
-            console.log("results: ", result)
+            //console.log("results: ", result)
         if(result.length !== 1) // user with email not found
             return resp.send(apiError("Invalid email"))
         const dbUser = result[0]
