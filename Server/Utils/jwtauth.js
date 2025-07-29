@@ -20,21 +20,21 @@ function verifyToken(token) {
 // JWT authentication middleware -- verify the JWT token
 function jwtAuth(req, resp, next) {
 	// if url is to be allowed for all users, pass request to next.
-	const nonProtectedUrls = ["/user/signin", "/user/signup", "/books/image"];
+	const nonProtectedUrls = ["/user/signin", "/user/signup/user", "/books/image"];
 	if (nonProtectedUrls.indexOf(req.url) >=0) {
 		next();
 		return;
 	}
 	// if no authorization header, return error (403)
 	if (!req.headers.authorization)
-		resp.status(403).send("Unauthoized Access - No authorization header");
+		return resp.status(403).send("Unauthoized Access - No authorization header");
 	// get req header - authorization and get the incoming token from it.
 	const [bearer, token] = req.headers.authorization.split(" ");
 	// verify the token
 	const decoded = verifyToken(token);
 	//console.log("incoming user token:", decoded);
 	// if not valid token, return error (403)
-	if (!decoded) resp.status(403).send("Unauthoized Access - Invalid token");
+	if (!decoded) return resp.status(403).send("Unauthoized Access - Invalid token");
 	else {
 		// otherwise, pass request to next.
 		req.user = { id: decoded.id, role: decoded.role };
