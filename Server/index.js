@@ -1,6 +1,6 @@
 const express=require("express");
 const app = express();
-const cors =require("cors");
+const cors =require("cors")
 const {jwtAuth}=require("./Utils/jwtauth")
 const userRouter=require("./Routers/Users")
 const restoRouter=require("./Routers/Resto")
@@ -13,7 +13,7 @@ const adminRouter=require("./Routers/Admin")
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use(jwtAuth);
+app.use(jwtAuth);
 app.use("/user",userRouter);
 app.use("/resto",restoRouter);
 app.use("/table",tableRouter);
