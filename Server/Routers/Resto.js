@@ -62,7 +62,7 @@ router.get("/owner/:owner_id",(req,resp)=>{
 
 //update resto
 
-router.put("/:id",(req,res)=>{
+router.put("/:id",(req,resp)=>{
     const{name,location,rating,category}=req.body;
     const{id}=req.params;
 
