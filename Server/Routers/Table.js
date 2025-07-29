@@ -1,6 +1,6 @@
-const db = require("../utils/dbpool")
-const {apiSuccess, apiError} = require("../utils/apiresult")
-const {createToken} = require("../utils/jwtauth")
+const db = require("../Utils/dbpool")
+const {apiSuccess, apiError} = require("../Utils/apiresult")
+const {createToken} = require("../Utils/jwtauth")
 const express = require("express")
 const bcrypt = require("bcrypt")
 const router = express.Router()
@@ -73,10 +73,6 @@ router.delete("/:id",(req,resp)=>{
             })
     })
 
-<<<<<<< HEAD
 //router.get("/resto/")
-=======
-
->>>>>>> dc1889c52f7d94cbfd0a1dd97bc22db51cdc61b8
 
 module.exports=router;

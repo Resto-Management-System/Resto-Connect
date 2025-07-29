@@ -1,6 +1,6 @@
-const db = require("../utils/dbpool")
-const {apiSuccess, apiError} = require("../utils/apiresult")
-const {createToken} = require("../utils/jwtauth")
+const db = require("../Utils/dbpool")
+const {apiSuccess, apiError} = require("../Utils/apiresult")
+const {createToken} = require("../Utils/jwtauth")
 const express = require("express")
 const bcrypt = require("bcrypt")
 const multer = require("multer");
