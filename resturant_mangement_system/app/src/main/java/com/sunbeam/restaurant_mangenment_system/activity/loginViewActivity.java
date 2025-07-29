@@ -69,7 +69,8 @@ public class loginViewActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(json);
                     String token= obj.getString("data");
                     updateToken(token);
-                    //Intent intent=new Intent();
+                    Intent intent=new Intent(loginViewActivity.this,LoadActivity.class);
+                    startActivity(intent);
                     //textoutput.setText(token);
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);
