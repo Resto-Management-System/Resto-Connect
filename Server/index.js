@@ -6,6 +6,7 @@ const userRouter=require("./Routers/Users")
 const restoRouter=require("./Routers/Resto")
 const tableRouter=require("./Routers/Table")
 
+
 const reviewRouter = require("./Routers/Review")
 const menuRouter=require("./Routers/Menu")
 const adminRouter=require("./Routers/Admin")
@@ -13,7 +14,7 @@ const adminRouter=require("./Routers/Admin")
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use(jwtAuth);
+app.use(jwtAuth);
 app.use("/user",userRouter);
 app.use("/resto",restoRouter);
 app.use("/table",tableRouter);
