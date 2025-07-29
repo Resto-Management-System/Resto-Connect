@@ -16,11 +16,11 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface API {
-    public static final String BASE_URL="http://192.168.189.65:3000";
+    public static final String BASE_URL="http://192.168.43.244:3000";
 
 
     @POST("/user/signin")
     public Call<ResponseBody> login(@Body User user);
-    @GET("")
+    @GET("/resto/table")
     public Call<ResponseBody> getTables(@Header("Authorization") String token);
 }

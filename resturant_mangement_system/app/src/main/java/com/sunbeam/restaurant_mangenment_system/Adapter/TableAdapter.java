@@ -32,9 +32,11 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.textCategory.setText(tableList.get(position).getCapacity());
-        holder.textCapacity.setText(tableList.get(position).getCapacity());
-        holder.textCharges.setText(tableList.get(position).getCharge());
+        Table table = tableList.get(position);
+
+        holder.textCategory.setText(table.getCategory()); // ✅ category is a String
+        holder.textCapacity.setText(String.valueOf(table.getCapacity())); // ✅ Convert int to String
+        holder.textCharges.setText(String.valueOf(table.getCharge()));
     }
 
     @Override
