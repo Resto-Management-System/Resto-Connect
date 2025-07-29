@@ -5,6 +5,9 @@ const {jwtAuth}=require("./Utils/jwtauth")
 const userRouter=require("./Routers/Users")
 const restoRouter=require("./Routers/Resto")
 const tableRouter=require("./Routers/Table")
+
+
+const reviewRouter = require("./Routers/Review")
 const menuRouter=require("./Routers/Menu")
 const adminRouter=require("./Routers/Admin")
 
@@ -17,6 +20,7 @@ app.use("/resto",restoRouter);
 app.use("/table",tableRouter);
 app.use("/api", menuRouter);
 app.use("/admin",adminRouter);
+app.use("/review", reviewRouter);
 
 
 const port = 3000;
