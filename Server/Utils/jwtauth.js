@@ -29,7 +29,7 @@ function jwtAuth(req, resp, next) {
 	if (!req.headers.authorization)
 		resp.status(403).send("Unauthoized Access - No authorization header");
 	// get req header - authorization and get the incoming token from it.
-	const [bearer, token] = req.headers.authorization.split(" ");
+	const [Bearer, token] = req.headers.authorization.split(" ");
 	// verify the token
 	const decoded = verifyToken(token);
 	//console.log("incoming user token:", decoded);

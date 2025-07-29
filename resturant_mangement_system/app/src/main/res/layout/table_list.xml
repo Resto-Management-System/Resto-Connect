@@ -6,23 +6,44 @@
     android:layout_height="match_parent">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:elevation="4dp"
+        android:padding="8dp">
 
-        <TextView
-            android:id="@+id/textCategory"
-            android:text="category"
+        <!-- Horizontal layout for the TextViews -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/textCapacity"
-            android:text="capacity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/textCharges"
-            android:text="charges"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/textCategory"
+                android:text="Category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textCapacity"
+                android:text="Capacity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textCharges"
+                android:text="Charges"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp" />
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.sunbeam.restaurant_mangenment_system.Class.Table;
 import com.sunbeam.restaurant_mangenment_system.R;
+import com.sunbeam.restaurant_mangenment_system.Utils.RetrofitClient;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,5 +59,6 @@ public class addTableActivity extends AppCompatActivity {
         table.setCharge(Integer.parseInt(chargesStr));
         table.setCategory(selectedCategory);
         Toast.makeText(this,""+table.toString(),Toast.LENGTH_SHORT).show();
+        RetrofitClient.getInstance().getApi().getTables()
     }
 }

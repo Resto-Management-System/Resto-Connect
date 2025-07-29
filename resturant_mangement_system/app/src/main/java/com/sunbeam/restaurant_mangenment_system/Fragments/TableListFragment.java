@@ -1,6 +1,7 @@
 package com.sunbeam.restaurant_mangenment_system.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -21,8 +23,10 @@ import com.sunbeam.restaurant_mangenment_system.Class.PrefsHelper;
 import com.sunbeam.restaurant_mangenment_system.Class.Table;
 import com.sunbeam.restaurant_mangenment_system.R;
 import com.sunbeam.restaurant_mangenment_system.Utils.RetrofitClient;
+import com.sunbeam.restaurant_mangenment_system.activity.addTableActivity;
 import com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -64,8 +68,25 @@ public class TableListFragment extends Fragment {
         recyclerViewTable=view.findViewById(R.id.recyclerViewTable);
         tableList=new ArrayList<>();
         tableAdapter=new TableAdapter(getContext(),tableList);
-//        toolbar = view.findViewById(R.id.toolbar);
-//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        recyclerViewTable.setAdapter(tableAdapter);
+        recyclerViewTable.setLayoutManager(new GridLayoutManager(getContext(),1));
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        // Hide default title if needed
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("Tables");
+
+        // Add navigation button (icon)
+        toolbar.setNavigationIcon(R.drawable.addtable);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to another activity
+                Intent intent = new Intent(getActivity(), addTableActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -78,7 +99,7 @@ public class TableListFragment extends Fragment {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        //getTable();
+        getTable();
     }
 
     public void getTable(){
@@ -86,24 +107,41 @@ public class TableListFragment extends Fragment {
 
         String token=prefsHelper.getToken(getContext());
 
-        String BearerToken="Bearer"+token;
+        String BearerToken="Bearer"+" "+token;
         RetrofitClient.getInstance().getApi().getTables(BearerToken).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try{
-                    if(!response.isSuccessful() || response.body() == null){
+                try {
+                    if (!response.isSuccessful() || response.body() == null) {
                         Toast.makeText(getContext(), "Server error or empty response", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                     String json = response.body().string();
                     Log.d("RAW_RESPONSE", json);
-                    JSONObject obj = new JSONObject(json);
 
-                    //Intent intent=new Intent();
-                    //textoutput.setText(token);
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONArray dataArray = jsonObject.getJSONArray("data");
+
+                    tableList.clear(); // Clear previous data
+
+                    for (int i = 0; i < dataArray.length(); i++) {
+                        JSONObject obj = dataArray.getJSONObject(i);
+
+                        Table table = new Table();
+                        //table.setId(obj.getInt("id"));
+                        table.setCategory(obj.getString("category"));
+                        table.setCapacity(obj.getInt("capacity"));
+                        table.setCharge(obj.getInt("charge"));
+
+                        tableList.add(table);
+                    }
+
+                    tableAdapter.notifyDataSetChanged(); // Refresh RecyclerView
+
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);
-                    Toast.makeText(getContext(), "Invalid Email or Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error parsing response", Toast.LENGTH_SHORT).show();
                 }
 
             }
