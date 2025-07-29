@@ -5,20 +5,7 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const router = express.Router()
 
-//add table
-router.post("/",(req,resp)=>{
-    const{resto_id,capacity,charge,category}=req.body;
-    
-    const query=`INSERT INTO  restaurant_tables(resto_id,capacity,charge,category)VALUES(?,?,?,?)`;
-    db.query(query,[resto_id,capacity,charge,category],(err,result)=>{
-        if(err)return resp.status(500).send(apiError(err));
-        resp.send(apiSuccess({
-            message:"Table added successfully",
-            table_id:result.insertId
-        }))
-    })
 
-})
 
 //get tables for specific restaurant
 router.get("/resto/:resto_id",(req,resp)=>{
