@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.sunbeam.restaurant_mangenment_system.Class.PrefsHelper;
+import com.sunbeam.restaurant_mangenment_system.Class.Table;
 import com.sunbeam.restaurant_mangenment_system.Class.User;
 
 import okhttp3.ResponseBody;
@@ -23,4 +24,6 @@ public interface API {
     public Call<ResponseBody> login(@Body User user);
     @GET("/resto/table")
     public Call<ResponseBody> getTables(@Header("Authorization") String token);
+    @POST("/resto/")
+    public Call<ResponseBody> addTable(@Header("Authorization") String token, @Body Table table);
 }

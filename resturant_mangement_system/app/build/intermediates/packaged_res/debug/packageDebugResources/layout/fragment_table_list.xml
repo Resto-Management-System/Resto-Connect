@@ -13,7 +13,17 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:title="Table List"
-        app:titleTextColor="@android:color/white"/>
+        app:titleTextColor="@android:color/white">
+
+        <ImageView
+            android:id="@+id/btnAddTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/addtable"
+            android:contentDescription="Add Table"
+            android:layout_gravity="end"
+            android:padding="12dp" />
+    </androidx.appcompat.widget.Toolbar>
 
 
     <androidx.recyclerview.widget.RecyclerView

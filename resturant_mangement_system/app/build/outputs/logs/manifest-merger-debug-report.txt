@@ -109,18 +109,18 @@ ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\Andr
 		ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:20:13-37
 	android:name
 		ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:19:13-54
-activity#com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity
+activity#com.sunbeam.restaurant_mangenment_system.activity.LoadActivity
 ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:21:9-23:40
 	android:exported
 		ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:23:13-37
 	android:name
-		ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:22:13-55
-activity#com.sunbeam.restaurant_mangenment_system.activity.LoadActivity
+		ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:22:13-50
+activity#com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity
 ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:24:9-32:20
 	android:exported
 		ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:26:13-36
 	android:name
-		ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:25:13-50
+		ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:25:13-55
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from E:\project\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:27:13-31:29
 action#android.intent.action.MAIN

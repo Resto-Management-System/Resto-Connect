@@ -9,6 +9,7 @@ drawable ic_launcher_foreground
 drawable menulist
 drawable profile
 drawable tablelist
+id btnAddTable
 id buttonAddTable
 id buttonLogin
 id editCapcity

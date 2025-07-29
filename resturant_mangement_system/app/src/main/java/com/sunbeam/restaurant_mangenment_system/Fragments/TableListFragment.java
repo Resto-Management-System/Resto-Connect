@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.sunbeam.restaurant_mangenment_system.Adapter.TableAdapter;
@@ -49,7 +50,6 @@ public class TableListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -78,28 +78,26 @@ public class TableListFragment extends Fragment {
         toolbar.setTitle("Tables");
 
         // Add navigation button (icon)
-        toolbar.setNavigationIcon(R.drawable.addtable);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to another activity
-                Intent intent = new Intent(getActivity(), addTableActivity.class);
-                startActivity(intent);
-            }
+        ImageView btnAddTable = view.findViewById(R.id.btnAddTable);
+
+        btnAddTable.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), addTableActivity.class);
+            startActivity(intent);
         });
+
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        getTable();
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        getTable();
+
     }
 
     public void getTable(){

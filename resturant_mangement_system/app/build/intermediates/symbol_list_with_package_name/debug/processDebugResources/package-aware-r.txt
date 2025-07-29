@@ -3214,6 +3214,7 @@ id bounce
 id bounceBoth
 id bounceEnd
 id bounceStart
+id btnAddTable
 id buttonAddTable
 id buttonLogin
 id buttonPanel
