@@ -3173,6 +3173,7 @@ int id action_bar_subtitle 0x7f090039
 int id action_bar_title 0x7f09003a
 int id action_container 0x7f09003b
 int id action_context_bar 0x7f09003c
+int id action_delete 0x7f09020a
 int id action_divider 0x7f09003d
 int id action_image 0x7f09003e
 int id action_menu_divider 0x7f09003f
@@ -3181,6 +3182,7 @@ int id action_mode_bar 0x7f090041
 int id action_mode_bar_stub 0x7f090042
 int id action_mode_close_button 0x7f090043
 int id action_text 0x7f090044
+int id action_update 0x7f09020b
 int id actions 0x7f090045
 int id activity_chooser_view_content 0x7f090046
 int id add 0x7f090047
@@ -3575,6 +3577,7 @@ int id textCapacity 0x7f0901ca
 int id textCategory 0x7f0901cb
 int id textCharges 0x7f0901cc
 int id textEnd 0x7f0901cd
+int id textName 0x7f09020c
 int id textSpacerNoButtons 0x7f0901ce
 int id textSpacerNoTitle 0x7f0901cf
 int id textStart 0x7f0901d0
@@ -3834,6 +3837,7 @@ int layout select_dialog_multichoice_material 0x7f0c006e
 int layout select_dialog_singlechoice_material 0x7f0c006f
 int layout support_simple_spinner_dropdown_item 0x7f0c0070
 int layout table_list 0x7f0c0071
+int menu menu_table_item 0x7f140000
 int mipmap ic_launcher 0x7f0e0000
 int mipmap ic_launcher_round 0x7f0e0001
 int plurals mtrl_badge_content_description 0x7f0f0000

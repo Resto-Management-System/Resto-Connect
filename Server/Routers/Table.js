@@ -33,25 +33,35 @@ router.get("/:id",(req,resp)=>{
 
 //update table
 
-router.put("/:id",(req,resp)=>{
-    const{capacity,charge,category}=req.body;
-    const{id}=req.params;
+router.patch("/:id", (req, resp) => {
+    const { capacity, charge, category } = req.body;
+    const { id } = req.params;
 
-    const query=`UPDATE restaurant_tables
-    SET capacity=?,charge=?,category=?
-    WHERE table_id=?`;
-    db.query(query,[capacity,charge,category,id],(err,result)=>{
-        if(err)
-            resp.status(500).send(apiError(err));
-        resp.send(apiSuccess({message:"Table updated successfully"}));
+    const query = `
+        UPDATE restaurant_tables
+        SET capacity = ?, charge = ?, category = ?
+        WHERE table_id = ?`;
 
-    })
-})
+    db.query(query, [capacity, charge, category, id], (err, result) => {
+        if (err) {
+            return resp.status(500).send(apiError(err));  // ✅ return added
+        }
+
+        // Optional: check if any row was actually updated
+        if (result.affectedRows === 0) {
+            return resp.status(404).send(apiError("No table found with this ID"));  // ✅ safe fallback
+        }
+        console.log(result)
+        return resp.send(apiSuccess({ message: "Table updated successfully" }));
+    });
+});
+
 
 //delete table
 
 router.delete("/:id",(req,resp)=>{
     const{id}=req.params;
+    console.log(id)
     db.query("DELETE FROM restaurant_tables WHERE table_id=?",[id],(err,result)=>{
         if(err)
             return resp.status(500).send(apiError(err));

@@ -2,6 +2,7 @@ package com.sunbeam.restaurant_mangenment_system.activity;
 
 import static java.security.AccessController.getContext;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -35,16 +37,42 @@ import retrofit2.Response;
 
 public class addTableActivity extends AppCompatActivity {
     EditText editCapcity,editCharges;
+    TextView textName;
     Spinner spinnerCategory;
+    int tableIdToUpdate;
+    boolean isUpdateMode;
     private String selectedCategory = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_table);
+        textName=findViewById(R.id.textName);
         editCapcity=findViewById(R.id.editCapcity);
         editCharges=findViewById(R.id.editCharges);
         spinnerCategory = findViewById(R.id.spinnerCategory);
+        Intent intent = getIntent();
+        boolean isUpdate = intent.getBooleanExtra("isUpdate", false);
+
+        if (isUpdate) {
+            int tableId = intent.getIntExtra("tableId", -1);
+            String category = intent.getStringExtra("category");
+            int capacity = intent.getIntExtra("capacity", 0);
+            int charge = intent.getIntExtra("charge", 0);
+
+            // Set values
+            textName.setText("Update table");
+            editCapcity.setText(String.valueOf(capacity));
+            editCharges.setText(String.valueOf(charge));
+
+            // Optional: set spinner category
+            int index = ((ArrayAdapter<String>) spinnerCategory.getAdapter()).getPosition(category);
+            spinnerCategory.setSelection(index);
+
+            // Save table ID for later update
+            tableIdToUpdate = tableId;  // Define this as a class field
+            isUpdateMode = true;
+        }
 
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -76,44 +104,87 @@ public class addTableActivity extends AppCompatActivity {
         table.setCharge(Integer.parseInt(chargesStr));
         table.setCategory(selectedCategory);
         Toast.makeText(this,""+table.toString(),Toast.LENGTH_SHORT).show();
-        RetrofitClient.getInstance().getApi().addTable(BearerToken,table).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (!response.isSuccessful() || response.body() == null) {
-                        Toast.makeText(addTableActivity.this, "Server error or empty response", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+        if (isUpdateMode) {
+            // Update existing table
+            RetrofitClient.getInstance().getApi().updateTable(BearerToken, tableIdToUpdate, table)
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            try {
+                                if (!response.isSuccessful() || response.body() == null) {
+                                    Toast.makeText(addTableActivity.this, "Server error or empty response", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                String json = response.body().string();
+                                Log.d("RAW_RESPONSE", json);
 
-                    String json = response.body().string();
-                    Log.d("RAW_RESPONSE", json);
-
-                    JSONObject jsonObject = new JSONObject(json);
+                                JSONObject jsonObject = new JSONObject(json);
 
 // Always check the type before accessing
-                    if (jsonObject.get("data") instanceof JSONArray) {
-                        JSONArray dataArray = jsonObject.getJSONArray("data");
-                        // parse array as before
-                    } else if (jsonObject.get("data") instanceof String) {
-                        String message = jsonObject.getString("data");
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                if (jsonObject.get("data") instanceof JSONArray) {
+                                    JSONArray dataArray = jsonObject.getJSONArray("data");
+                                    // parse array as before
+                                } else if (jsonObject.get("data") instanceof String) {
+                                    String message = jsonObject.getString("data");
+                                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                }
+                                setResult(RESULT_OK);
+                                finish();
+                            } catch (Exception e) {
+                                Log.e("PARSE_ERR", "Error parsing", e);
+                                Toast.makeText(addTableActivity.this,"Error parsing response",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.e("API_ERR", "Failed", t);
+                            Toast.makeText(addTableActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+        } else {
+            // Add new table
+            RetrofitClient.getInstance().getApi().addTable(BearerToken,table).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        if (!response.isSuccessful() || response.body() == null) {
+                            Toast.makeText(addTableActivity.this, "Server error or empty response", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        String json = response.body().string();
+                        Log.d("RAW_RESPONSE", json);
+
+                        JSONObject jsonObject = new JSONObject(json);
+
+// Always check the type before accessing
+                        if (jsonObject.get("data") instanceof JSONArray) {
+                            JSONArray dataArray = jsonObject.getJSONArray("data");
+                            // parse array as before
+                        } else if (jsonObject.get("data") instanceof String) {
+                            String message = jsonObject.getString("data");
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RESULT_OK);
+                        finish();
+
+
+
+                    } catch (Exception e) {
+                        Log.e("PARSE_ERR", "Error parsing", e);
+                        Toast.makeText(addTableActivity.this,"Error parsing response",Toast.LENGTH_SHORT).show();
                     }
-                    setResult(RESULT_OK);
-                    finish();
-
-
-
-                } catch (Exception e) {
-                    Log.e("PARSE_ERR", "Error parsing", e);
-                    Toast.makeText(addTableActivity.this,"Error parsing response",Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("API_ERR", "Failed", t);
-                Toast.makeText(addTableActivity.this, "Network error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("API_ERR", "Failed", t);
+                    Toast.makeText(addTableActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        }
+
 }

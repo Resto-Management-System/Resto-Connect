@@ -9,6 +9,8 @@ drawable ic_launcher_foreground
 drawable menulist
 drawable profile
 drawable tablelist
+id action_delete
+id action_update
 id btnAddTable
 id buttonAddTable
 id buttonLogin
@@ -23,6 +25,7 @@ id tabLayout
 id textCapacity
 id textCategory
 id textCharges
+id textName
 id toolbar
 id viewPager2
 layout activity_add_table
@@ -32,6 +35,7 @@ layout fragment_menu_list
 layout fragment_profile
 layout fragment_table_list
 layout table_list
+menu menu_table_item
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name

@@ -128,6 +128,8 @@ public class TableListFragment extends Fragment {
 
                         Table table = new Table();
                         //table.setId(obj.getInt("id"));
+                        table.setTable_id(obj.getInt("table_id"));
+                        table.setResto_id(obj.getInt("resto_id"));
                         table.setCategory(obj.getString("category"));
                         table.setCapacity(obj.getInt("capacity"));
                         table.setCharge(obj.getInt("charge"));
