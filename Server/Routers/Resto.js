@@ -17,6 +17,7 @@ router.get("/table",(req,resp)=>{
         db.query("select * from restaurant_tables where resto_id=?",[result[0].resto_id],(err,result2)=>{
             if(err)
                 return resp.send(apiError(err))
+            //console.log(result2)
             resp.send(apiSuccess(result2))
         })
     })

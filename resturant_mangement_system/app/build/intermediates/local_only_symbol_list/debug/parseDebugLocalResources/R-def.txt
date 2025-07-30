@@ -9,6 +9,8 @@ drawable ic_launcher_foreground
 drawable menulist
 drawable profile
 drawable tablelist
+id action_delete
+id action_update
 id btnAddTable
 id btnChooseDocument
 id btnUpdate
@@ -31,12 +33,16 @@ id tabLayout
 id textCapacity
 id textCategory
 id textCharges
+<<<<<<< HEAD
 id textEmail
 id textLocation
 id textName
 id textPhone
 id textRestoName
 id textTitle
+=======
+id textName
+>>>>>>> eec930f40052ce74e1ed9392d91554617925fe96
 id toolbar
 id txtSelectedDocument
 id viewPager2
@@ -48,6 +54,7 @@ layout fragment_menu_list
 layout fragment_profile
 layout fragment_table_list
 layout table_list
+menu menu_table_item
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name

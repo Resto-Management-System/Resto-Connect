@@ -44,8 +44,17 @@
         "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/layout/activity_add_table.xml"
     },
     {
+<<<<<<< HEAD
         "merged": "com.sunbeam.restaurant_mangenment_system.app-debug-32:/layout_fragment_profile.xml.flat",
         "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/layout/fragment_profile.xml"
+=======
+        "merged": "com.sunbeam.restaurant_mangenment_system.app-debug-32:/layout_activity_add_table.xml.flat",
+        "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/layout/activity_add_table.xml"
+    },
+    {
+        "merged": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-debug-32:\\drawable_addtable.xml.flat",
+        "source": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-main-34:\\drawable\\addtable.xml"
+>>>>>>> eec930f40052ce74e1ed9392d91554617925fe96
     },
     {
         "merged": "com.sunbeam.restaurant_mangenment_system.app-debug-32:/layout_fragment_menu_list.xml.flat",
@@ -80,8 +89,17 @@
         "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/drawable/menulist.xml"
     },
     {
+<<<<<<< HEAD
         "merged": "com.sunbeam.restaurant_mangenment_system.app-debug-32:/mipmap-xhdpi_ic_launcher_round.webp.flat",
         "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/mipmap-xhdpi/ic_launcher_round.webp"
+=======
+        "merged": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-debug-32:\\menu_menu_table_item.xml.flat",
+        "source": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-main-34:\\menu\\menu_table_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-debug-32:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-main-34:\\drawable\\ic_launcher_background.xml"
+>>>>>>> eec930f40052ce74e1ed9392d91554617925fe96
     },
     {
         "merged": "com.sunbeam.restaurant_mangenment_system.app-debug-32:/drawable_tablelist.xml.flat",
@@ -104,11 +122,32 @@
         "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/drawable/profile.xml"
     },
     {
+<<<<<<< HEAD
         "merged": "com.sunbeam.restaurant_mangenment_system.app-debug-32:/layout_fragment_table_list.xml.flat",
         "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/layout/fragment_table_list.xml"
     },
     {
         "merged": "com.sunbeam.restaurant_mangenment_system.app-debug-32:/layout_table_list.xml.flat",
         "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/layout/table_list.xml"
+=======
+        "merged": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-debug-32:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-main-34:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-debug-32:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-main-34:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-debug-32:\\layout_activity_add_table.xml.flat",
+        "source": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-main-34:\\layout\\activity_add_table.xml"
+    },
+    {
+        "merged": "com.sunbeam.restaurant_mangenment_system.app-debug-32:/menu_menu_table_item.xml.flat",
+        "source": "com.sunbeam.restaurant_mangenment_system.app-main-34:/menu/menu_table_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-debug-32:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\sojwa\\.gradle\\daemon\\8.11.1\\com.sunbeam.restaurant_mangenment_system.app-main-34:\\mipmap-mdpi\\ic_launcher.webp"
+>>>>>>> eec930f40052ce74e1ed9392d91554617925fe96
     }
 ]
