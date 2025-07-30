@@ -1,24 +1,11 @@
-const db = require("../utils/dbpool")
-const {apiSuccess, apiError} = require("../utils/apiresult")
-const {createToken} = require("../utils/jwtauth")
+const db = require("../Utils/dbpool")
+const {apiSuccess, apiError} = require("../Utils/apiresult")
+const {createToken} = require("../Utils/jwtauth")
 const express = require("express")
 const bcrypt = require("bcrypt")
 const router = express.Router()
 
-//add table
-router.post("/",(req,resp)=>{
-    const{resto_id,capacity,charge,category}=req.body;
-    
-    const query=`INSERT INTO  restaurant_tables(resto_id,capacity,charge,category)VALUES(?,?,?,?)`;
-    db.query(query,[resto_id,capacity,charge,category],(err,result)=>{
-        if(err)return resp.status(500).send(apiError(err));
-        resp.send(apiSuccess({
-            message:"Table added successfully",
-            table_id:result.insertId
-        }))
-    })
 
-})
 
 //get tables for specific restaurant
 router.get("/resto/:resto_id",(req,resp)=>{
@@ -73,7 +60,10 @@ router.delete("/:id",(req,resp)=>{
             })
     })
 
+<<<<<<< HEAD
 //router.get("/resto/")
 
+=======
+>>>>>>> 4c426f4a534c3fbf92a806bf6338abea1ec3373e
 
 module.exports=router;

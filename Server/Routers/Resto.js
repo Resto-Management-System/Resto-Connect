@@ -1,6 +1,6 @@
-const db = require("../utils/dbpool")
-const {apiSuccess, apiError} = require("../utils/apiresult")
-const {createToken} = require("../utils/jwtauth")
+const db = require("../Utils/dbpool")
+const {apiSuccess, apiError} = require("../Utils/apiresult")
+const {createToken} = require("../Utils/jwtauth")
 const express = require("express")
 const bcrypt = require("bcrypt")
 const router = express.Router()
@@ -18,6 +18,23 @@ router.get("/table",(req,resp)=>{
             if(err)
                 return resp.send(apiError(err))
             resp.send(apiSuccess(result2))
+        })
+    })
+})
+
+//add table
+router.post("/",(req,resp)=>{
+    const id =req.user.id
+    const{capacity,charge,category}=req.body;
+    db.query("Select * from restaurants where owner_id=?",[id],(err,result)=>{
+        if(err)
+            return resp.send(apiError(err))
+        db.query("INSERT INTO  restaurant_tables(resto_id,capacity,charge,category)VALUES(?,?,?,?)",[result[0].resto_id,capacity,charge,category],(err,result2)=>{
+            if(err)
+                return resp.send(apiError(err))
+            if(result2.affectedRows==0)
+                return resp.send(apiError("table not add"))
+            resp.send(apiSuccess("table added successfully"))
         })
     })
 })

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.sunbeam.restaurant_mangenment_system.Class.PrefsHelper;
+import com.sunbeam.restaurant_mangenment_system.Class.Table;
 import com.sunbeam.restaurant_mangenment_system.Class.User;
 
 import okhttp3.ResponseBody;
@@ -16,11 +17,13 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface API {
-    public static final String BASE_URL="http://192.168.189.65:3000";
+    public static final String BASE_URL="http://192.168.43.244:3000";
 
 
     @POST("/user/signin")
     public Call<ResponseBody> login(@Body User user);
-    @GET("")
+    @GET("/resto/table")
     public Call<ResponseBody> getTables(@Header("Authorization") String token);
+    @POST("/resto/")
+    public Call<ResponseBody> addTable(@Header("Authorization") String token, @Body Table table);
 }
