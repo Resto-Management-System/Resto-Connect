@@ -1,6 +1,8 @@
 package com.sunbeam.restaurant_mangenment_system.Class;
 
 public class Table {
+    private int table_id;
+    private int resto_id;
     private int capacity;
     private int charge;
     private String category;
@@ -8,10 +10,12 @@ public class Table {
     public Table() {
     }
 
-    public Table(int capacity, int charge, String category) {
+    public Table(int capacity, int charge, String category,int table_id,int resto_id) {
         this.capacity = capacity;
         this.charge = charge;
         this.category = category;
+        this.table_id= table_id;
+        this.resto_id =resto_id;
     }
 
     public int getCapacity() {
@@ -38,10 +42,28 @@ public class Table {
         this.category = category;
     }
 
+    public int getTable_id() {
+        return table_id;
+    }
+
+    public void setTable_id(int table_id) {
+        this.table_id = table_id;
+    }
+
+    public int getResto_id() {
+        return resto_id;
+    }
+
+    public void setResto_id(int resto_id) {
+        this.resto_id = resto_id;
+    }
+
     @Override
     public String toString() {
         return "Table{" +
-                "capacity=" + capacity +
+                "table_id=" + table_id +
+                ", resto_id=" + resto_id +
+                ", capacity=" + capacity +
                 ", charge=" + charge +
                 ", category='" + category + '\'' +
                 '}';

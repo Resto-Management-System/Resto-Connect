@@ -74,8 +74,14 @@ public class loginViewActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(json);
                     String token = obj.getString("data");
                     updateToken(token);
+<<<<<<< HEAD
                     Toast.makeText(loginViewActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                     // You can navigate to LoadActivity or Home screen here
+=======
+                    Intent intent=new Intent(loginViewActivity.this,LoadActivity.class);
+                    startActivity(intent);
+                    //textoutput.setText(token);
+>>>>>>> ca7d040396532d417ba3dea9efa3a57359ab276d
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);
                     Toast.makeText(loginViewActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
