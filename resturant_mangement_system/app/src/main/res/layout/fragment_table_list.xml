@@ -16,6 +16,14 @@
         app:titleTextColor="@android:color/white">
 
         <ImageView
+            android:id="@+id/btnOrederRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/order_record"
+            android:contentDescription="Add Table"
+            android:layout_gravity="end"
+            android:padding="12dp" />
+        <ImageView
             android:id="@+id/btnAddTable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
