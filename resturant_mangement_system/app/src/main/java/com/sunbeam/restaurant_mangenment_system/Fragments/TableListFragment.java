@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.sunbeam.restaurant_mangenment_system.Adapter.TableAdapter;
 import com.sunbeam.restaurant_mangenment_system.Class.PrefsHelper;
 import com.sunbeam.restaurant_mangenment_system.Class.Table;
+import com.sunbeam.restaurant_mangenment_system.Interface.API;
 import com.sunbeam.restaurant_mangenment_system.R;
 import com.sunbeam.restaurant_mangenment_system.Utils.RetrofitClient;
 import com.sunbeam.restaurant_mangenment_system.activity.addTableActivity;
@@ -105,8 +106,15 @@ public class TableListFragment extends Fragment {
 
         String token=prefsHelper.getToken(getContext());
 
+<<<<<<< HEAD
+        String BearerToken="Bearer"+token;
+        API api = RetrofitClient.getApi(); // ✅ Correct
+        api.getTables(BearerToken).enqueue(new Callback<ResponseBody>() {
+
+=======
         String BearerToken="Bearer"+" "+token;
         RetrofitClient.getInstance().getApi().getTables(BearerToken).enqueue(new Callback<ResponseBody>() {
+>>>>>>> ca7d040396532d417ba3dea9efa3a57359ab276d
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

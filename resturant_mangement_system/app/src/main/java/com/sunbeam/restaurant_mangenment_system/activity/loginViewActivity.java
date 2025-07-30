@@ -53,30 +53,41 @@ public class loginViewActivity extends AppCompatActivity {
 //        editor.apply();
     }
     public void Login(View view){
-        User user=new User();
+        User user = new User();
         user.setEmail(editEmail.getText().toString());
         user.setPasswd(editPassword.getText().toString());
-        RetrofitClient.getInstance().getApi().login(user).enqueue(new Callback<ResponseBody>() {
+
+        // FIX: Correct Retrofit usage
+        com.sunbeam.restaurant_mangenment_system.Interface.API api =
+                RetrofitClient.getInstance().create(com.sunbeam.restaurant_mangenment_system.Interface.API.class);
+
+        api.login(user).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try{
-                    if(!response.isSuccessful() || response.body() == null){
+                try {
+                    if (!response.isSuccessful() || response.body() == null) {
                         Toast.makeText(loginViewActivity.this, "Server error or empty response", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     String json = response.body().string();
                     Log.d("RAW_RESPONSE", json);
                     JSONObject obj = new JSONObject(json);
-                    String token= obj.getString("data");
+                    String token = obj.getString("data");
                     updateToken(token);
+<<<<<<< HEAD
+                    Toast.makeText(loginViewActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                    // You can navigate to LoadActivity or Home screen here
+=======
                     Intent intent=new Intent(loginViewActivity.this,LoadActivity.class);
                     startActivity(intent);
                     //textoutput.setText(token);
+>>>>>>> ca7d040396532d417ba3dea9efa3a57359ab276d
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);
                     Toast.makeText(loginViewActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("API_ERR", "Failed", t);
@@ -84,6 +95,7 @@ public class loginViewActivity extends AppCompatActivity {
             }
         });
     }
+
     public void Change(){
 
     }

@@ -83,7 +83,7 @@ router.get("/getallusers",(req,resp)=>{
 
 //delete userbyid api
 
-router.delete("/deleteuserbyid",(req,resp)=>{
+router.delete("/deleteuserbyid/:id",(req,resp)=>{
     db.query("DELETE FROM users WHERE user_id=?",[req.params.id],(err,result)=>{
         if(err)
             return resp.send(apiError(err));
@@ -94,7 +94,7 @@ router.delete("/deleteuserbyid",(req,resp)=>{
 
 //update user api
 
-router.put("/updatebyid",(req,resp)=>{
+router.patch("/updatebyid/:id",(req,resp)=>{
     const{name,email,phone}=req.body;
     db.query("UPDATE users SET name=? ,email=?,phone=?,WHERE user_id=?",
         [name,email,phone,req.params.id],

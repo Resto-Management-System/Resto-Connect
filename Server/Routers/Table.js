@@ -70,5 +70,7 @@ router.delete("/:id",(req,resp)=>{
             })
     })
 
+//router.get("/resto/")
+
 
 module.exports=router;

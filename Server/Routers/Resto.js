@@ -5,6 +5,9 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const router = express.Router()
 
+
+
+
 //get table list
 router.get("/table",(req,resp)=>{
     const id=req.user.id
@@ -36,6 +39,7 @@ router.post("/",(req,resp)=>{
         })
     })
 })
+
 
 
 // Get all restaurants

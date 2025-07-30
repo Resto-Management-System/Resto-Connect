@@ -16,13 +16,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
+            android:name=".activity.AddMenuItemActivity"
+            android:exported="false" />
+=======
+            android:name=".activity.loginViewActivity"
+            android:exported="false" />
+
+>>>>>>> ca7d040396532d417ba3dea9efa3a57359ab276d
+        <activity
             android:name=".activity.addTableActivity"
             android:exported="false" />
         <activity
             android:name=".activity.LoadActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.loginViewActivity"
+            android:name=".activity.UpdateProfileActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
