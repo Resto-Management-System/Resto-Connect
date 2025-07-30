@@ -94,7 +94,7 @@ router.delete("/deleteuserbyid/:id",(req,resp)=>{
 
 //update user api
 
-router.put("/updatebyid/:id",(req,resp)=>{
+router.patch("/updatebyid/:id",(req,resp)=>{
     const{name,email,phone}=req.body;
     db.query("UPDATE users SET name=? ,email=?,phone=?,WHERE user_id=?",
         [name,email,phone,req.params.id],

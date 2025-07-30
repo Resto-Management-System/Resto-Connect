@@ -4,7 +4,7 @@
             "outputFile": "com.sunbeam.restaurant_mangenment_system.app-mergeDebugResources-30:/values-large-v4/values-large-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\sojwa\\.gradle\\caches\\8.11.1\\transforms\\782b45d0f2b1dd43597f573673cb11ed\\transformed\\material-1.12.0\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "C:\\BE Project\\Criminal Spot\\gradle-3.3\\caches\\8.11.1\\transforms\\782b45d0f2b1dd43597f573673cb11ed\\transformed\\material-1.12.0\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\sojwa\\.gradle\\caches\\8.11.1\\transforms\\f5ed251ffc65082e33f82c209b2b1396\\transformed\\appcompat-1.7.1\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "C:\\BE Project\\Criminal Spot\\gradle-3.3\\caches\\8.11.1\\transforms\\f5ed251ffc65082e33f82c209b2b1396\\transformed\\appcompat-1.7.1\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

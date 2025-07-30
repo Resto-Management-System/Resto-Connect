@@ -60,10 +60,7 @@ router.delete("/:id",(req,resp)=>{
             })
     })
 
-<<<<<<< HEAD
 //router.get("/resto/")
 
-=======
->>>>>>> 4c426f4a534c3fbf92a806bf6338abea1ec3373e
 
 module.exports=router;

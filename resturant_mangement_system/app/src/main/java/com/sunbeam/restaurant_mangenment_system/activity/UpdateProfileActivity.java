@@ -11,7 +11,7 @@ import com.sunbeam.restaurant_mangenment_system.R;
 
 public class UpdateProfileActivity extends AppCompatActivity {
 
-    EditText editName, editEmail, editPhone, editLocation, editPassword;
+    EditText editName, editEmail, editPhone, editLocation, editPassword,editrestoname;
     Button btnUpdate;
 
     @Override
@@ -24,6 +24,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         editPhone = findViewById(R.id.editPhone);
         editLocation = findViewById(R.id.editLocation);
         editPassword = findViewById(R.id.editPassword);
+        editrestoname=findViewById(R.id.editrestoname);
         btnUpdate = findViewById(R.id.btnUpdate);
 
         btnUpdate.setOnClickListener(v -> {
@@ -32,6 +33,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
             String phone = editPhone.getText().toString().trim();
             String location = editLocation.getText().toString().trim();
             String password = editPassword.getText().toString().trim();
+            String resto_name= editrestoname.getText().toString().trim();
+
 
             if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || location.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();

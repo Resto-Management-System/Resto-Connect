@@ -44,6 +44,15 @@
             android:hint="Location"
             android:inputType="textPostalAddress" />
 
+        <EditText
+            android:id="@+id/editrestoname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Resto"
+            android:inputType="textPostalAddress" />
+
+
+
         <!-- Optional: Document (Image/File) -->
         <Button
             android:id="@+id/btnChooseDocument"

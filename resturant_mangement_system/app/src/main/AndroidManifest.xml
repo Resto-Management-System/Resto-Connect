@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.UpdateProfileActivity"
+            android:name=".activity.loginViewActivity"
             android:exported="false" />
 
         <activity
@@ -26,7 +26,7 @@
             android:name=".activity.LoadActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.loginViewActivity"
+            android:name=".activity.UpdateProfileActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

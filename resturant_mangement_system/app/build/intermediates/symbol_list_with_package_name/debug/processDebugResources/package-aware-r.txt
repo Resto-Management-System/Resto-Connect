@@ -3215,6 +3215,8 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id btnAddTable
+id btnChooseDocument
+id btnUpdate
 id buttonAddTable
 id buttonLogin
 id buttonPanel
@@ -3293,9 +3295,13 @@ id edge
 id editCapcity
 id editCharges
 id editEmail
+id editLocation
+id editName
 id editPassword
+id editPhone
 id edit_query
 id edit_text_id
+id editrestoname
 id elastic
 id embed
 id end
@@ -3479,6 +3485,8 @@ id pin
 id position
 id postLayout
 id pressed
+id profileFragmentContainer
+id profileLayout
 id progress_circular
 id progress_horizontal
 id radio
@@ -3575,10 +3583,16 @@ id text2
 id textCapacity
 id textCategory
 id textCharges
+id textEmail
 id textEnd
+id textLocation
+id textName
+id textPhone
+id textRestoName
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id textTitle
 id textTop
 id text_input_end_icon
 id text_input_error_icon
@@ -3609,6 +3623,7 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id txtSelectedDocument
 id unchecked
 id uniform
 id unlabeled
@@ -3752,6 +3767,7 @@ layout abc_tooltip
 layout activity_add_table
 layout activity_load
 layout activity_login_view
+layout activity_update_profile
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
