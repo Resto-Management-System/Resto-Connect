@@ -31,18 +31,6 @@
         android:theme="@style/Theme.Restaurant_mangenment_system"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.sunbeam.restaurant_mangenment_system.activity.AddMenuItemActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.sunbeam.restaurant_mangenment_system.activity.UpdateProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.sunbeam.restaurant_mangenment_system.activity.addTableActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.sunbeam.restaurant_mangenment_system.activity.LoadActivity"
-            android:exported="false" />
-        <activity
             android:name="com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity"
             android:exported="true" >
             <intent-filter>

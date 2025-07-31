@@ -26,10 +26,10 @@ com.sunbeam.restaurant_mangenment_system.app-lifecycle-viewmodel-savedstate-2.6.
 com.sunbeam.restaurant_mangenment_system.app-startup-runtime-1.1.1-25 C:\Users\sojwa\.gradle\caches\8.11.1\transforms\e48820829b5058e88e9a6aaa3b4328c2\transformed\startup-runtime-1.1.1\res
 com.sunbeam.restaurant_mangenment_system.app-appcompat-1.7.1-26 C:\Users\sojwa\.gradle\caches\8.11.1\transforms\f5ed251ffc65082e33f82c209b2b1396\transformed\appcompat-1.7.1\res
 com.sunbeam.restaurant_mangenment_system.app-viewpager2-1.0.0-27 C:\Users\sojwa\.gradle\caches\8.11.1\transforms\fe4631832cd7beec35cc46a6d1c57d80\transformed\viewpager2-1.0.0\res
-com.sunbeam.restaurant_mangenment_system.app-pngs-28 E:\project\Resto-Connect\resturant_mangement_system\app\build\generated\res\pngs\debug
-com.sunbeam.restaurant_mangenment_system.app-resValues-29 E:\project\Resto-Connect\resturant_mangement_system\app\build\generated\res\resValues\debug
-com.sunbeam.restaurant_mangenment_system.app-packageDebugResources-30 E:\project\Resto-Connect\resturant_mangement_system\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.sunbeam.restaurant_mangenment_system.app-packageDebugResources-31 E:\project\Resto-Connect\resturant_mangement_system\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.sunbeam.restaurant_mangenment_system.app-debug-32 E:\project\Resto-Connect\resturant_mangement_system\app\build\intermediates\merged_res\debug\mergeDebugResources
-com.sunbeam.restaurant_mangenment_system.app-debug-33 E:\project\Resto-Connect\resturant_mangement_system\app\src\debug\res
-com.sunbeam.restaurant_mangenment_system.app-main-34 E:\project\Resto-Connect\resturant_mangement_system\app\src\main\res
+com.sunbeam.restaurant_mangenment_system.app-pngs-28 E:\recreate\Resto-Connect\resturant_mangement_system\app\build\generated\res\pngs\debug
+com.sunbeam.restaurant_mangenment_system.app-resValues-29 E:\recreate\Resto-Connect\resturant_mangement_system\app\build\generated\res\resValues\debug
+com.sunbeam.restaurant_mangenment_system.app-packageDebugResources-30 E:\recreate\Resto-Connect\resturant_mangement_system\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.sunbeam.restaurant_mangenment_system.app-packageDebugResources-31 E:\recreate\Resto-Connect\resturant_mangement_system\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.sunbeam.restaurant_mangenment_system.app-debug-32 E:\recreate\Resto-Connect\resturant_mangement_system\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.sunbeam.restaurant_mangenment_system.app-debug-33 E:\recreate\Resto-Connect\resturant_mangement_system\app\src\debug\res
+com.sunbeam.restaurant_mangenment_system.app-main-34 E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\res
