@@ -72,8 +72,8 @@ public class loginViewActivity extends AppCompatActivity {
                     updateToken(token);
                     Toast.makeText(loginViewActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                     // You can navigate to LoadActivity or Home screen here
-                    //Intent intent=new Intent(loginViewActivity.this,LoadActivity.class);
-                    //startActivity(intent);
+                    Intent intent=new Intent(loginViewActivity.this,LoadActivity.class);
+                    startActivity(intent);
                     //textoutput.setText(token);
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);

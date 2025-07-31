@@ -34,7 +34,7 @@ router.post("/signup/user",(req,resp)=>{
                 return resp.send(apiError(err))
             if(result.affectedRows !==1)
                 return resp.send(apiError("user not added"))
-            console.log(result)
+            
             resp.send(apiSuccess("user register successfully"))
         })
 })
