@@ -27,6 +27,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 public class loginViewActivity extends AppCompatActivity {
     EditText editEmail,editPassword;
@@ -56,12 +57,7 @@ public class loginViewActivity extends AppCompatActivity {
         User user = new User();
         user.setEmail(editEmail.getText().toString());
         user.setPasswd(editPassword.getText().toString());
-
-        // FIX: Correct Retrofit usage
-        com.sunbeam.restaurant_mangenment_system.Interface.API api =
-                RetrofitClient.getInstance().create(com.sunbeam.restaurant_mangenment_system.Interface.API.class);
-
-        api.login(user).enqueue(new Callback<ResponseBody>() {
+        RetrofitClient.getInstance().getApi().login(user).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -74,14 +70,11 @@ public class loginViewActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(json);
                     String token = obj.getString("data");
                     updateToken(token);
-<<<<<<< HEAD
                     Toast.makeText(loginViewActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                     // You can navigate to LoadActivity or Home screen here
-=======
-                    Intent intent=new Intent(loginViewActivity.this,LoadActivity.class);
-                    startActivity(intent);
+                    //Intent intent=new Intent(loginViewActivity.this,LoadActivity.class);
+                    //startActivity(intent);
                     //textoutput.setText(token);
->>>>>>> ca7d040396532d417ba3dea9efa3a57359ab276d
                 } catch (Exception e) {
                     Log.e("PARSE_ERR", "Error parsing", e);
                     Toast.makeText(loginViewActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();

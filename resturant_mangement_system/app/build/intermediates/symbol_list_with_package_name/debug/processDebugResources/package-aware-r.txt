@@ -3014,6 +3014,7 @@ drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable ic_add
 drawable ic_arrow_back_black_24
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -3108,6 +3109,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable order_record
 drawable profile
 drawable tablelist
 drawable test_level_drawable
@@ -3216,8 +3218,11 @@ id bounce
 id bounceBoth
 id bounceEnd
 id bounceStart
+id btnAddMenu
 id btnAddTable
 id btnChooseDocument
+id btnOrederRecord
+id btnSave
 id btnUpdate
 id buttonAddTable
 id buttonLogin
@@ -3295,12 +3300,15 @@ id easeOut
 id east
 id edge
 id editCapcity
+id editCategory
 id editCharges
 id editEmail
+id editItemName
 id editLocation
 id editName
 id editPassword
 id editPhone
+id editPrice
 id edit_query
 id edit_text_id
 id editrestoname
@@ -3314,6 +3322,7 @@ id escape
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id fabAddMenuItem
 id fade
 id fill
 id fill_horizontal
@@ -3365,6 +3374,7 @@ id jumpToEnd
 id jumpToStart
 id labeled
 id layout
+id layout_add_menu
 id left
 id leftToRight
 id legacy
@@ -3400,6 +3410,9 @@ id material_timepicker_ok_button
 id material_timepicker_view
 id material_value_index
 id matrix
+id menuItemCategory
+id menuItemName
+id menuItemPrice
 id message
 id middle
 id mini
@@ -3494,6 +3507,7 @@ id progress_horizontal
 id radio
 id ratio
 id rectangles
+id recyclerMenuItems
 id recyclerViewTable
 id report_drawn
 id reverseSawtooth
@@ -3587,14 +3601,10 @@ id textCategory
 id textCharges
 id textEmail
 id textEnd
-<<<<<<< HEAD
 id textLocation
 id textName
 id textPhone
 id textRestoName
-=======
-id textName
->>>>>>> eec930f40052ce74e1ed9392d91554617925fe96
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
@@ -3770,9 +3780,11 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_add_menu_item
 layout activity_add_table
 layout activity_load
 layout activity_login_view
+layout activity_menu_items
 layout activity_update_profile
 layout custom_dialog
 layout design_bottom_navigation_item
@@ -3795,6 +3807,7 @@ layout fragment_profile
 layout fragment_table_list
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
+layout item_menu
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
