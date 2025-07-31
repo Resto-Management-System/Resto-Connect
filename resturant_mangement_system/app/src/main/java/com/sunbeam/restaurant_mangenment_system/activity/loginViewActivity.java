@@ -89,7 +89,9 @@ public class loginViewActivity extends AppCompatActivity {
         });
     }
 
-    public void Change(){
+    public void openRegister(View view){
+        Intent intent=new Intent(loginViewActivity.this,RegisterCustomerActivity.class);
+        startActivity(intent);
 
     }
 }

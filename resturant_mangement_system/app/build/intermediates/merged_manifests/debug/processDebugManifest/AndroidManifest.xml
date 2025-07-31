@@ -31,6 +31,9 @@
         android:theme="@style/Theme.Restaurant_mangenment_system"
         android:usesCleartextTraffic="true" >
         <activity
+            android:name="com.sunbeam.restaurant_mangenment_system.activity.RegisterCustomerActivity"
+            android:exported="false" />
+        <activity
             android:name="com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity"
             android:exported="true" >
             <intent-filter>

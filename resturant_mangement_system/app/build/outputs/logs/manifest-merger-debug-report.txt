@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:2:1-29:12
-INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:2:1-29:12
-INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:2:1-29:12
-INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:2:1-29:12
+ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:2:1-32:12
+INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:2:1-32:12
+INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:2:1-32:12
+INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:2:1-32:12
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\sojwa\.gradle\caches\8.11.1\transforms\782b45d0f2b1dd43597f573673cb11ed\transformed\material-1.12.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.1] C:\Users\sojwa\.gradle\caches\8.11.1\transforms\99c7ed204a261943f6d293baa623aba1\transformed\constraintlayout-2.2.1\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.appcompat:appcompat-resources:1.7.1] C:\Users\sojwa\.gradle\caches\8.11.1\transforms\cfdd27ceda04d895f8c6771f0c95bf20\transformed\appcompat-resources-1.7.1\AndroidManifest.xml:2:1-7:12
@@ -61,8 +61,8 @@ ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\And
 	android:name
 		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:7:5-27:19
-INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:7:5-27:19
+ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:7:5-30:19
+INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:7:5-30:19
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\sojwa\.gradle\caches\8.11.1\transforms\782b45d0f2b1dd43597f573673cb11ed\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\sojwa\.gradle\caches\8.11.1\transforms\782b45d0f2b1dd43597f573673cb11ed\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.1] C:\Users\sojwa\.gradle\caches\8.11.1\transforms\99c7ed204a261943f6d293baa623aba1\transformed\constraintlayout-2.2.1\AndroidManifest.xml:7:5-20
@@ -103,22 +103,28 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\so
 		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:9:9-65
 	android:usesCleartextTraffic
 		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:16:9-44
-activity#com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity
-ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:18:9-26:20
+activity#com.sunbeam.restaurant_mangenment_system.activity.RegisterCustomerActivity
+ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:18:9-20:40
 	android:exported
-		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:20:13-36
+		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:20:13-37
 	android:name
-		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:19:13-55
+		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:19:13-62
+activity#com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity
+ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:21:9-29:20
+	android:exported
+		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:23:13-36
+	android:name
+		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:22:13-55
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:21:13-25:29
+ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:24:13-28:29
 action#android.intent.action.MAIN
-ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:22:17-69
+ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:25:17-69
 	android:name
-		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:22:25-66
+		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:25:25-66
 category#android.intent.category.LAUNCHER
-ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:24:17-77
+ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:27:17-77
 	android:name
-		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:24:27-74
+		ADDED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml:27:27-74
 uses-sdk
 INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from E:\recreate\Resto-Connect\resturant_mangement_system\app\src\main\AndroidManifest.xml

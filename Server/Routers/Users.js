@@ -32,6 +32,9 @@ router.post("/signup/user",(req,resp)=>{
         db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[name,email,encPasswd,phone,role],(err,result)=>{
             if(err)
                 return resp.send(apiError(err))
+            if(result.affectedRows !==1)
+                return resp.send(apiError("user not added"))
+            console.log(result)
             resp.send(apiSuccess("user register successfully"))
         })
 })
