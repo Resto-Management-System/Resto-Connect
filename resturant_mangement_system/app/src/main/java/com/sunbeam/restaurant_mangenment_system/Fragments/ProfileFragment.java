@@ -50,7 +50,15 @@ public class ProfileFragment extends Fragment {
         textName = view.findViewById(R.id.textName);
         textEmail= view.findViewById(R.id.textEmail);
         textPhone = view.findViewById(R.id.textPhone);
+        getProfile();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
     public void getProfile(){
         PrefsHelper prefsHelper=new PrefsHelper();
 
@@ -84,7 +92,8 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Log.e("API_ERR", "Failed", t);
+                Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
             }
         });
     }

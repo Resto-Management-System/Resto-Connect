@@ -3176,7 +3176,6 @@ id action_bar_subtitle
 id action_bar_title
 id action_container
 id action_context_bar
-id action_delete
 id action_divider
 id action_image
 id action_menu_divider
@@ -3219,6 +3218,7 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id btnChooseDocument
+id btnEditProfile
 id btnUpdate
 id buttonLogin
 id buttonPanel
@@ -3489,13 +3489,13 @@ id position
 id postLayout
 id pressed
 id profileFragmentContainer
-id profileLayout
 id progress_circular
 id progress_horizontal
 id radio
 id ratio
 id rectangles
 id recycleViewResto
+id recycleViewTable
 id report_drawn
 id reverseSawtooth
 id right
@@ -3585,7 +3585,6 @@ id text2
 id textAddress
 id textEmail
 id textEnd
-id textLocation
 id textName
 id textPhone
 id textRegister
@@ -3764,6 +3763,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_book_table
 layout activity_load
 layout activity_login_view
 layout activity_register_customer

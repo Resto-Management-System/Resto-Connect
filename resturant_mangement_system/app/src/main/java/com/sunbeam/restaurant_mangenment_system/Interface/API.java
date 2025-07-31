@@ -16,7 +16,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface API {
-    public static final String BASE_URL="http://192.168.178.65:3000";
+    public static final String BASE_URL="http://192.168.43.244:3000";
 
     @POST("/user/signup/user")
     public Call<ResponseBody> register(@Body User user);
@@ -24,15 +24,15 @@ public interface API {
     public Call<ResponseBody> login(@Body User user);
     @GET("/resto/")
     public Call<ResponseBody> getResto(@Header("Authorization") String token);
-    @GET("/")
+    @GET("/user/")
     public Call<ResponseBody> getUser(@Header("Authorization") String token);
 
 
 
 
 
-    @GET("/resto/table")
-    public Call<ResponseBody> getTables(@Header("Authorization") String token);
+    @GET("/table/resto/{resto_id}")
+    public Call<ResponseBody> getTables(@Header("Authorization") String token,@Path("resto_id") int resto_id);
     @PUT("/user/updateProfile/{id}")
     Call<ResponseBody> updateOwner(
             @Header("Authorization") String token,

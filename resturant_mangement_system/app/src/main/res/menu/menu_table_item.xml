@@ -4,8 +4,4 @@
         android:id="@+id/action_update"
         android:title="Update Table"
         android:icon="@android:drawable/ic_menu_edit" />
-    <item
-        android:id="@+id/action_delete"
-        android:title="Delete Table"
-        android:icon="@android:drawable/ic_menu_delete"/>
 </menu>

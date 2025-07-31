@@ -1,6 +1,11 @@
 package com.sunbeam.restaurant_mangenment_system.Adapter;
 
+
+
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sunbeam.restaurant_mangenment_system.Class.Restaurant;
 import com.sunbeam.restaurant_mangenment_system.R;
+import com.sunbeam.restaurant_mangenment_system.activity.BookTableActivity;
 
 import java.util.List;
 
@@ -36,6 +42,15 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         Restaurant restaurant=restoList.get(position);
         holder.textRestoName.setText(restaurant.getName());
         holder.textAddress.setText(restaurant.getLoction());
+
+        holder.itemView.setOnClickListener(v->{
+            Intent intent=new Intent(context, BookTableActivity.class);
+            intent.putExtra("resto_id",restaurant.getResto_id());
+            context.startActivity(intent);
+
+        });
+
+
 
     }
 

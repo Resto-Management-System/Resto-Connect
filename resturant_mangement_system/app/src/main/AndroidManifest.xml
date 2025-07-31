@@ -15,13 +15,17 @@
         android:theme="@style/Theme.Restaurant_mangenment_system"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity android:name=".activity.loginViewActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".activity.BookTableActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoadActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.RegisterCustomerActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LoadActivity"
+            android:name=".activity.loginViewActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -61,14 +61,14 @@ router.post("/signin",(req,resp)=>{
 
 //get userbyid api
 
-router.get("/userbyid/:id",(req,resp)=>{
-    const id =req.params.id;
+router.get("/",(req,resp)=>{
+    const id =req.user.id;
     db.query("SELECT user_id,name,email,phone,role FROM users WHERE user_id=?",[id],(err,result)=>{
-       if(err)
-        return resp.send(apiError(err));
-       if(result.length===0)
-        //console.log("Requested ID-", req.params.id);
-        return resp.send(apiError("user not found"));
+        if(err)
+            return resp.send(apiError(err))
+        if(result.length==0)
+            return resp.send(apiError("user not found"))
+        //console.log(result[0])
         resp.send(apiSuccess(result[0]))
     });
 });

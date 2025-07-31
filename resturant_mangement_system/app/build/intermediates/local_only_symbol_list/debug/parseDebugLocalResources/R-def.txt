@@ -11,9 +11,9 @@ drawable menulist
 drawable order_record
 drawable profile
 drawable tablelist
-id action_delete
 id action_update
 id btnChooseDocument
+id btnEditProfile
 id btnUpdate
 id buttonLogin
 id buttonRegister
@@ -27,12 +27,11 @@ id layoutEmail
 id layoutPassword
 id main
 id profileFragmentContainer
-id profileLayout
 id recycleViewResto
+id recycleViewTable
 id tabLayout
 id textAddress
 id textEmail
-id textLocation
 id textName
 id textPhone
 id textRegister
@@ -40,6 +39,7 @@ id textRestoName
 id textTitle
 id txtSelectedDocument
 id viewPager2
+layout activity_book_table
 layout activity_load
 layout activity_login_view
 layout activity_register_customer

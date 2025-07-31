@@ -31,13 +31,16 @@
         android:theme="@style/Theme.Restaurant_mangenment_system"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity"
+            android:name="com.sunbeam.restaurant_mangenment_system.activity.BookTableActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.sunbeam.restaurant_mangenment_system.activity.LoadActivity"
             android:exported="false" />
         <activity
             android:name="com.sunbeam.restaurant_mangenment_system.activity.RegisterCustomerActivity"
             android:exported="false" />
         <activity
-            android:name="com.sunbeam.restaurant_mangenment_system.activity.LoadActivity"
+            android:name="com.sunbeam.restaurant_mangenment_system.activity.loginViewActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
