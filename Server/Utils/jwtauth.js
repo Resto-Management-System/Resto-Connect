@@ -20,7 +20,7 @@ function verifyToken(token) {
 // JWT authentication middleware -- verify the JWT token
 function jwtAuth(req, resp, next) {
 	// if url is to be allowed for all users, pass request to next.
-	const nonProtectedUrls = ["/users/signin", "/users/signup", "/books/image"];
+	const nonProtectedUrls = ["/users/signin", "/users/signup"];
 	if (nonProtectedUrls.indexOf(req.url) >= 0) {
 		next();
 		return;

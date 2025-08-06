@@ -5,6 +5,7 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const multer = require("multer");
 const router = express.Router()
+
 const upload = multer({dest: "Upload/"})
 
 
@@ -17,14 +18,33 @@ router.post("/signup/owner",upload.single("document"),(req,resp)=>{
                 return resp.send(apiError(err))
             if(result.affectedRows==1){
                 const id=result.insertId;
-                db.query("insert into restaurants(Owner_id,name,document,location) value(?,?,?,?)",[id,resto_name,documentname,location],(err,re)=>{
+                db.query("insert into restaurants(Owner_id,name,document,location) value(?,?,?,?)",
+                    [id,resto_name,documentname,location],(err,re)=>{
                     if(err)
                         return resp.send(apiError(err))
-                    resp.send(apiSuccess("restaurant register successfully"))
+                    resp.send(apiSuccess({ message : "Restaurant registerd successfully", user_id: id }))
                 })
             }   
-        })
-})
+        });
+});
+
+// Users.js
+router.post("/upload-document/:userId", upload.single("document"), (req, resp) => {
+    const userId = req.params.userId;
+    const documentname = req.file ? req.file.filename : null;
+    
+    if (!documentname) {
+        return resp.status(400).send(apiError("Document file not found"));
+    }
+
+    // You need to update the restaurants table, not the users table
+    db.query("UPDATE restaurants SET document=? WHERE owner_id=?", [documentname, userId], (err, result) => {
+        if (err) {
+            return resp.status(500).send(apiError(err));
+        }
+        resp.send(apiSuccess("Document uploaded successfully"));
+    });
+});
 
 router.post("/signup/user",(req,resp)=>{
      const {Name,email,passwd,phone,role}=req.body
