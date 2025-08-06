@@ -26,6 +26,7 @@ router.post("/signup/owner",upload.single("document"),(req,resp)=>{
         })
 })
 
+
 router.post("/signup/user",(req,resp)=>{
      const {name,email,passwd,phone,role}=req.body
         const encPasswd = bcrypt.hashSync(passwd, 10)
@@ -54,6 +55,27 @@ router.post("/signin",(req,resp)=>{
         resp.send(apiSuccess(token))
     })
 })
+
+router.post("/upload-document/:userId", upload.single("document"), (req, resp) => {
+    const userId = req.params.userId;
+    const documentname = req.file ? req.file.filename : null;
+    
+    if (!documentname) {
+        return resp.status(400).send(apiError("Document file not found."));
+    }
+
+    // Update the 'document' field in the 'restaurants' table for the given owner_id
+    db.query("UPDATE restaurants SET document=? WHERE owner_id=?", [documentname, userId], (err, result) => {
+        if (err) {
+            console.error("Error updating document for restaurant:", err);
+            return resp.status(500).send(apiError("Failed to upload document."));
+        }
+        if (result.affectedRows === 0) {
+            return resp.status(404).send(apiError("Restaurant not found for the given owner ID."));
+        }
+        resp.send(apiSuccess("Document uploaded successfully"));
+    });
+});
 
 
 //get userbyid api

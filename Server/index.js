@@ -15,12 +15,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(jwtAuth);
-app.use("/user",userRouter);
+app.use("/users",userRouter);
 app.use("/resto",restoRouter);
 app.use("/table",tableRouter);
 app.use("/api", menuRouter);
 app.use("/admin",adminRouter);
 app.use("/review", reviewRouter);
+
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Log the error stack for debugging
+    res.status(500).send('Something broke on the server!'); // Send a generic error response
+});
 
 
 const port = 3000;
