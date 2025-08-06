@@ -2,8 +2,13 @@ import axios from "axios";
 import { baseUrl } from "./apiconfig";
 
 
-export async function userSignUp(formData) {
-	const url = `${baseUrl}/users/signup`; 
+export async function userSignUp(formData, role) {
+	let url = "";
+	if (role === "Owner") {
+		url = `${baseUrl}/users/signup/owner`;
+	} else {
+		url = `${baseUrl}/users/signup/user`;
+	}	
 	try {
 		const resp = await axios.post(url, formData, {
 			headers: {
@@ -43,6 +48,27 @@ export async function userSignIn(email, passwd) {
 	return data;
 }
 
-export async function uploadDocumentForOwner(formData) {
-	
+// users.js
+export async function uploadDocumentForOwner(formData, userId) {
+	const url = `${baseUrl}/users/upload-document/${userId}`; 
+	try {
+		const resp = await axios.post(url, formData, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		});
+
+		if (resp.status !== 200)
+			throw new Error("Axios API call failed with status " + resp.status);
+
+		const result = resp.data;
+
+		if (result.status !== "success")
+			throw new Error(result.message || "API returned an error");
+
+		return result.data;
+	} catch (err) {
+		console.error("Document upload error:", err);
+		throw err;
+	}
 }

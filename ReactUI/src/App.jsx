@@ -4,27 +4,28 @@ import "bootstrap/dist/js/bootstrap.bundle.js";
 
 import UploadDocument from "./Components/UploadDocuments";
 import LoginForm from "./Components/LoginForm";
+import OwnerDashboard from "./Components/OwnerDashboard";
 import Home from "./Components/Home";
 import RegistrationForm from "./components/RegistrationForm";
+import { createContext, useState } from "react";
+import AdminDashboard from "./Components/AdminDashboard";
 
 
 
+export const AuthContext = createContext();
 
-
-// export const AuthContext = createContext();
-
-// function getUserFromSessionStorage() {
-// 	const userJson = sessionStorage.getItem("user");
-// 	const user = JSON.parse(userJson);
-// 	return user;
-// }
+function getUserFromSessionStorage() {
+const userJson = sessionStorage.getItem("user");
+	const user = JSON.parse(userJson);
+	return user;
+}
 
 function App() {
-	//const [user, setUser] = useState(getUserFromSessionStorage());
+	const [user, setUser] = useState(getUserFromSessionStorage());
 
 	return (
 		<div className="container">
-			{/* <AuthContext.Provider value={{ user, setUser }}> */}
+			<AuthContext.Provider value={{ user, setUser }}>
 				<Routes>
 					{/* /url */}
 					<Route index="true" element={<Home/>} />
@@ -32,9 +33,13 @@ function App() {
 					<Route path="/upload-documents" element={<UploadDocument />} />
 					{/* /user/url */}
 					<Route path="/login" element={<LoginForm />} />
-					{/* /user/url */}
+					
+					{/* Route after login */}
+					<Route path="/owner/dashboard" element={<OwnerDashboard/>} />
+
+					<Route path ="/admin/admin-dashboard" element={<AdminDashboard/>} />
 				</Routes>
-			{/* </AuthContext.Provider> */}
+			</AuthContext.Provider>
 		</div>
 	);
 }
