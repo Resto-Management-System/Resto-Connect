@@ -1,13 +1,17 @@
 import { Routes, Route } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { createContext, useState } from "react";
 
 import UploadDocument from "./Components/UploadDocuments";
 import LoginForm from "./Components/LoginForm";
-import OwnerDashboard from "./Components/OwnerDashboard";
+import OwnerDashboard from "./components/OwnerDashboard";
 import Home from "./Components/Home";
-import RegistrationForm from "./components/RegistrationForm";
-import { createContext, useState } from "react";
+import RegistrationForm from "./Components/RegistrationForm";
+
 import AdminDashboard from "./Components/AdminDashboard";
 
 
@@ -35,9 +39,9 @@ function App() {
 					<Route path="/login" element={<LoginForm />} />
 					
 					{/* Route after login */}
-					<Route path="/owner/dashboard" element={<OwnerDashboard/>} />
+					<Route path="/ownerdashboard" element={<OwnerDashboard/>} />
 
-					<Route path ="/admin/admin-dashboard" element={<AdminDashboard/>} />
+					<Route path ="admin-dashboard" element={<AdminDashboard/>} />
 				</Routes>
 			</AuthContext.Provider>
 		</div>

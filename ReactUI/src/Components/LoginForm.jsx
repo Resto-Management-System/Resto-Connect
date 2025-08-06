@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Correct: react-router-dom
+import { Link, useNavigate } from "react-router"; // Correct: react-router-dom
 import { toast } from "react-toastify";
 import { userSignIn } from "../Services/users";
 import { AuthContext } from "../App"; // Ensure this path and export are correct
@@ -41,7 +41,7 @@ const LoginForm = () => {
         // Role-based navigation
         // Ensure the role casing matches what's in your JWT payload (e.g., 'owner' or 'Owner')
         if (decodedUser.role === "owner") { 
-          navigate("/owner-dashboard"); // Navigate to owner's dashboard
+          navigate("/ownerdashboard"); // Navigate to owner's dashboard
         } else if (decodedUser.role === "admin") {
           navigate("/admin-dashboard"); // Navigate to admin's dashboard
         } else {
