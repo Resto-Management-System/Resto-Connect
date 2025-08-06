@@ -61,7 +61,7 @@ const OwnerDashboard = () => {
       <aside className="dashboard-sidebar-new">
         <div className="sidebar-logo">Resto Connect</div>
         <nav className="sidebar-nav">
-          <Link to="/owner-dashboard" className="nav-item active">🏠 Dashboard</Link>
+          <Link to="/ownerdashboard" className="nav-item active">🏠 Dashboard</Link>
           <Link to="/owner/bookings" className="nav-item">📅 Bookings</Link>
           <Link to="/owner/menu" className="nav-item">🍽️ Menu</Link>
           <Link to="/owner/tables" className="nav-item">🪑 Tables</Link>
@@ -69,7 +69,7 @@ const OwnerDashboard = () => {
           <Link to="/owner/settings" className="nav-item">⚙️ Settings</Link>
         </nav>
         <div className="sidebar-footer">
-          <Link to="/profile" className="profile-btn">👤 Profile</Link>
+          <Link to="/owner/profile" className="profile-btn">👤 Profile</Link>
           <button onClick={handleSignOut} className="sign-out-btn">🚪 Sign Out</button>
         </div>
       </aside>

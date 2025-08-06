@@ -32,6 +32,8 @@ const LoginForm = () => {
 
         // Decode the token to get user details, including the role
         const decodedUser = jwtDecode(token);
+
+        sessionStorage.setItem("user", JSON.stringify(decodedUser)); 
         
         // Update setUser with isAuthenticated, token, and the decoded user object
         setUser({ isAuthenticated: true, token: token, user: decodedUser }); 
