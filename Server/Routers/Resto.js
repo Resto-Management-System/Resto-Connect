@@ -5,6 +5,20 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const router = express.Router()
 
+//get table list
+router.get("/table",(req,resp)=>{
+    const id=req.user.id
+    db.query("select * from restaurants where owner_id=?",[id],(err,result)=>{
+        if(err)
+            return resp.send(apiError(err))
+        db.query("select * from restaurant_tables where resto_id=?",[result[0].resto_id],(err,result2)=>{
+            if(err)
+                return resp.send(apiError(err))
+            resp.send(apiSuccess(result2))
+        })
+    })
+})
+
 
 // Get all restaurants
 router.get("/", (req, resp) => {
@@ -15,25 +29,6 @@ router.get("/", (req, resp) => {
         resp.send(apiSuccess(result));
     });
 });
-
-//register resto
-
-router.post("/",(req,resp)=>{
-     const {owner_id,name,document,location}=req.body;
-     const query=
-     `INSERT INTO restaurants (owner_id,name,document,location)
-     VALUES(?,?,?,?)`;
-
-     db.query(query,[owner_id,name,document,location],(err,result)=>{
-        if(err)
-            return resp.status(500).send(apiError(err));
-        resp.send(apiSuccess({
-            message:"Restaurant registered successfully",
-            restaurant_id:result.insertId
-        }))
-     })
-
-})
 
 // get restobyid
 
@@ -67,7 +62,7 @@ router.get("/owner/:owner_id",(req,resp)=>{
 
 //update resto
 
-router.put("/:id",(req,res)=>{
+router.put("/:id",(req,resp)=>{
     const{name,location,rating,category}=req.body;
     const{id}=req.params;
 
@@ -79,16 +74,6 @@ router.put("/:id",(req,res)=>{
     })
 })
 
-//delete resto
 
-router.delete("/:id",(req,resp)=>{
-    const{id}=req.params;
-
-    db.query("DELETE FROM restaurants WHERE restaurant_id=?",[id],(err,result)=>{
-     if(err)
-        return res.status(500).send(apiError(err));
-        resp.send(apiSuccess({message:"Restaurant deleted successfully"}));
-    })
-})
 
 module.exports=router;

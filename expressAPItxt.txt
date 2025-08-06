@@ -1,0 +1,27 @@
+Registration
+api-http://localhost:3000/user/signup
+method-post
+data-if owner{
+    "Name":"Sojwal",
+    "email":"sojwalco09@gamil.com",
+    "passwd":1234,
+    "phone":"9370294115",
+    "role":"owner",
+    "resto_name":"xyz",
+    "document":"abc",
+    "location":"alandi"
+}if customer{
+    "Name":"aditya",
+    "email":"adityaco09@gamil.com",
+    "passwd":1234,
+    "phone":"9370294115",
+    "role":"customer"
+}
+
+login
+api-http://localhost:3000/user/signin
+metnod-post
+data-{
+    "email":"sojwalco09@gamil.com",
+    "passwd":1234
+}

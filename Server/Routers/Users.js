@@ -47,9 +47,9 @@ router.post("/upload-document/:userId", upload.single("document"), (req, resp) =
 });
 
 router.post("/signup/user",(req,resp)=>{
-     const {Name,email,passwd,phone,role}=req.body
+     const {name,email,passwd,phone,role}=req.body
         const encPasswd = bcrypt.hashSync(passwd, 10)
-        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[Name,email,encPasswd,phone,role],(err,result)=>{
+        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[name,email,encPasswd,phone,role],(err,result)=>{
             if(err)
                 return resp.send(apiError(err))
             resp.send(apiSuccess("user register successfully"))
@@ -61,7 +61,7 @@ router.post("/signin",(req,resp)=>{
     db.query("SELECT * FROM users WHERE email=?",[email],(err,result)=>{
         if(err)
             return resp.send(apiError(err))
-            console.log("results: ", result)
+            //console.log("results: ", result)
         if(result.length !== 1) // user with email not found
             return resp.send(apiError("Invalid email"))
         const dbUser = result[0]
