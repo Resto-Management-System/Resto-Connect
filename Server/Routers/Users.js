@@ -92,6 +92,61 @@ router.get("/userbyid/:id",(req,resp)=>{
     });
 });
 
+// GET /users/userbyid/:id - Get user by ID (including restaurant info for owners)
+router.get("/userbyid/:id", (req, resp) => {
+    const id = req.params.id;
+    // Modified query to LEFT JOIN with restaurants to get resto_name and location if user is an owner
+    const query = `
+        SELECT 
+            u.user_id, u.name, u.email, u.phone, u.role,
+            r.name AS resto_name, r.location AS location
+        FROM users u
+        LEFT JOIN restaurants r ON u.user_id = r.Owner_id
+        WHERE u.user_id = ?`;
+
+    db.query(query, [id], (err, result) => {
+       if (err) {
+        console.error("Error fetching user by ID:", err);
+        return resp.status(500).send(apiError("Failed to fetch user."));
+       }
+       if (result.length === 0) {
+        return resp.status(404).send(apiError("User not found"));
+       }
+        resp.send(apiSuccess(result[0]));
+    });
+});
+
+// PUT /users/updatebyid/:id - Update user profile (including restaurant details for owners)
+router.put("/updatebyid/:id", (req, resp) => {
+    const userId = req.params.id;
+    const {name, email, phone, resto_name, location, role} = req.body; // Get role to conditionally update restaurant info
+
+    // Update user table
+    db.query("UPDATE users SET name=?, email=?, phone=? WHERE user_id=?",
+        [name, email, phone, userId],
+        (err, userResult) => {
+            if (err) {
+                console.error("Error updating user:", err);
+                return resp.status(500).send(apiError("Failed to update user."));
+            }
+
+            // If the user is an owner, also update restaurant details
+            if (role === 'owner') { // Check the role from the request body
+                db.query("UPDATE restaurants SET name=?, location=? WHERE Owner_id=?",
+                    [resto_name, location, userId],
+                    (err, restoResult) => {
+                        if (err) {
+                            console.error("Error updating restaurant:", err);
+                            return resp.status(500).send(apiError("Failed to update restaurant details."));
+                        }
+                        resp.send(apiSuccess("Profile and Restaurant details updated successfully"));
+                    });
+            } else {
+                resp.send(apiSuccess("Profile updated successfully"));
+            }
+        });
+});
+
 //get alluser api
 
 router.get("/getallusers",(req,resp)=>{
