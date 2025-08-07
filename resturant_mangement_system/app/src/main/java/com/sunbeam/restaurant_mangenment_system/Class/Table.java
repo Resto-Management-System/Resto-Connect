@@ -1,6 +1,11 @@
 package com.sunbeam.restaurant_mangenment_system.Class;
 
-public class Table {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Table implements Parcelable {
     private int table_id;
     private int resto_id;
     private int capacity;
@@ -17,6 +22,26 @@ public class Table {
         this.table_id= table_id;
         this.resto_id =resto_id;
     }
+
+    protected Table(Parcel in) {
+        table_id = in.readInt();
+        resto_id = in.readInt();
+        capacity = in.readInt();
+        charge = in.readInt();
+        category = in.readString();
+    }
+
+    public static final Creator<Table> CREATOR = new Creator<Table>() {
+        @Override
+        public Table createFromParcel(Parcel in) {
+            return new Table(in);
+        }
+
+        @Override
+        public Table[] newArray(int size) {
+            return new Table[size];
+        }
+    };
 
     public int getCapacity() {
         return capacity;
@@ -67,5 +92,20 @@ public class Table {
                 ", charge=" + charge +
                 ", category='" + category + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(table_id);
+        dest.writeInt(resto_id);
+        dest.writeInt(capacity);
+        dest.writeInt(charge);
+        dest.writeString(category);
     }
 }

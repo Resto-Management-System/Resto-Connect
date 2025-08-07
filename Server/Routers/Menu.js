@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt")
 const router = express.Router()
 
 // Get all menu items for a specific restaurant
-router.get("/restaurant/:resto_id/menu_items", (req, resp) => {
+router.get("/resto/:resto_id", (req, resp) => {
     const { resto_id } = req.params;
 
     const query = `SELECT * FROM menu_items WHERE resto_id = ?`;

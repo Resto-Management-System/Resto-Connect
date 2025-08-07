@@ -16,6 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.PalceOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MenuListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.BookTableActivity"
             android:exported="false" />
         <activity

@@ -8,9 +8,51 @@
     android:layout_height="match_parent"
     tools:context=".activity.BookTableActivity">
 
+    <TextView
+        android:text="Selected Tables"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewOrderedTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Add this just after recycleViewOrderedTable -->
+    <TextView
+        android:id="@+id/textTotalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Total Price: ₹0"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:gravity="end"/>
+    <Button
+        android:id="@+id/btnOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Order Tables"
+        android:layout_margin="12dp" />
+
+
+    <TextView
+        android:text="All Tables"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewTable"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
+
+
+
+
 
 </LinearLayout>

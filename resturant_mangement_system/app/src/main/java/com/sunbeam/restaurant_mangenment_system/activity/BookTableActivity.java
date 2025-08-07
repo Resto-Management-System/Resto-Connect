@@ -1,18 +1,18 @@
 package com.sunbeam.restaurant_mangenment_system.activity;
 
-import static java.security.AccessController.getContext;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sunbeam.restaurant_mangenment_system.Adapter.TableAdapter;
 import com.sunbeam.restaurant_mangenment_system.Class.PrefsHelper;
 import com.sunbeam.restaurant_mangenment_system.Class.Table;
 import com.sunbeam.restaurant_mangenment_system.R;
@@ -30,19 +30,84 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BookTableActivity extends AppCompatActivity {
-    RecyclerView recycleViewTable;
+    RecyclerView recycleViewTable,recycleViewOrderedTable;
     int resto_id;
-    List<Table> tableList;
+    List<Table> tableList,orderTableList;
+    TableAdapter availableAdapter;
+    TableAdapter orderedAdapter;
+    TextView textTotalPrice;
+    Button btnOrder;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_book_table);
         recycleViewTable=findViewById(R.id.recycleViewTable);
+        recycleViewOrderedTable=findViewById(R.id.recycleViewOrderedTable);
+        textTotalPrice = findViewById(R.id.textTotalPrice);
+        btnOrder = findViewById(R.id.btnOrder);
+
+
         resto_id=getIntent().getIntExtra("resto_id",0);
+
         tableList=new ArrayList<>();
+        orderTableList=new ArrayList<>();
+
+
+        availableAdapter = new TableAdapter(
+                BookTableActivity.this,
+                tableList,
+                orderTableList,
+                true,
+                table -> {
+                    tableList.remove(table);
+                    orderTableList.add(table);
+                    availableAdapter.notifyDataSetChanged();
+                    orderedAdapter.notifyDataSetChanged();
+                    updateTotalPrice();  // 👈 added
+                },
+                null
+        );
+
+        orderedAdapter = new TableAdapter(
+                BookTableActivity.this,
+                orderTableList,
+                tableList,
+                false,
+                null,
+                table -> {
+                    orderTableList.remove(table);
+                    tableList.add(table);
+                    orderedAdapter.notifyDataSetChanged();
+                    availableAdapter.notifyDataSetChanged();
+                    updateTotalPrice();  // 👈 added
+                }
+        );
+
+
+        recycleViewTable.setAdapter(availableAdapter);
+        recycleViewTable.setLayoutManager(new LinearLayoutManager(this));
+
+        recycleViewOrderedTable.setAdapter(orderedAdapter);
+        recycleViewOrderedTable.setLayoutManager(new LinearLayoutManager(this));
+
+        btnOrder.setOnClickListener(v -> {
+            Intent intent = new Intent(BookTableActivity.this, MenuListActivity.class);
+            intent.putExtra("resto_id",resto_id);
+            intent.putParcelableArrayListExtra("selectedTables", new ArrayList<>(orderTableList));
+            startActivity(intent);
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getTable();
     }
+
     public void getTable(){
         PrefsHelper prefsHelper=new PrefsHelper();
 
@@ -63,6 +128,8 @@ public class BookTableActivity extends AppCompatActivity {
 
                     JSONObject obj = new JSONObject(json);
                     JSONArray dataArray =obj.getJSONArray("data");
+                    tableList.clear();
+                    orderTableList.clear();
                     for (int i = 0; i < dataArray.length(); i++){
                         JSONObject object=dataArray.getJSONObject(i);
 
@@ -73,10 +140,11 @@ public class BookTableActivity extends AppCompatActivity {
                         table.setCharge(object.getInt("charge"));
                         table.setCategory(object.getString("category"));
                         tableList.add(table);
-                        Toast.makeText(BookTableActivity.this," "+table.toString(),Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(BookTableActivity.this," "+table.toString(),Toast.LENGTH_SHORT).show();
 
                     }
-
+                    availableAdapter.notifyDataSetChanged();
+                    orderedAdapter.notifyDataSetChanged();
 
 
                     //restaurantAdapter.notifyDataSetChanged(); // Refresh RecyclerView
@@ -95,4 +163,12 @@ public class BookTableActivity extends AppCompatActivity {
         });
 
     }
+    public void updateTotalPrice() {
+        int total = 0;
+        for (Table table : orderTableList) {
+            total += table.getCharge();
+        }
+        textTotalPrice.setText("Total Price: ₹" + total);
+    }
+
 }

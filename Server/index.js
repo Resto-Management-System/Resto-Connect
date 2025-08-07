@@ -15,7 +15,7 @@ app.use(jwtAuth);
 app.use("/user",userRouter);
 app.use("/resto",restoRouter);
 app.use("/table",tableRouter);
-app.use("/", menuRouter);
+app.use("/menu", menuRouter);
 app.use("/admin",adminRouter);
 
 
