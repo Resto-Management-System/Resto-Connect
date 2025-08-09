@@ -94,10 +94,10 @@ CREATE TABLE bookings (
     booking_id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT,
     resto_id INT,
-    table_id INT,
+    table_ids Json,
     start_time DATETIME,
     end_time DATETIME,
-    status enum('Booked', 'Cancelled', 'Completed')
+    status enum('Booked', 'Cancelled', 'Completed') DEFAULT 'Booked'
 );
 
 -- 7. Orders

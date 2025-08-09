@@ -109,5 +109,119 @@ router.patch("/updatebyid/:id",(req,resp)=>{
     
 });
 
+router.post("/order/:resto_id", (req, resp) => {
+    const user_id = req.user.id;
+    const resto_id = req.params.resto_id;
+    const { tableList, menuList, start_time, end_time,charge,price, total_amount } = req.body;
+
+    // Extract table_ids as JSON array
+    const tableIds = tableList.map(t => t.table_id);
+    const tableIdsJson = JSON.stringify(tableIds);
+
+    db.getConnection((err, connection) => {
+        if (err) return resp.send(apiError(err));
+
+        connection.beginTransaction(err => {
+            if (err) {
+                connection.release();
+                return resp.send(apiError(err));
+            }
+
+            // 1️⃣ Insert into bookings
+            connection.query(
+                `INSERT INTO bookings (customer_id, resto_id, table_ids, start_time, end_time, status) 
+                 VALUES (?, ?, CAST(? AS JSON), ?, ?, 'Booked')`,
+                [user_id, resto_id, tableIdsJson, start_time, end_time],
+                (err, bookingResult) => {
+                    if (err) {
+                        return connection.rollback(() => {
+                            connection.release();
+                            resp.send(apiError(err));
+                        });
+                    }
+
+                    const booking_id = bookingResult.insertId;
+
+                    // 2️⃣ Insert into orders
+                    connection.query(
+                        `INSERT INTO orders (booking_id, order_time, status) 
+                         VALUES (?, NOW(), 'Pending')`,
+                        [booking_id],
+                        (err, orderResult) => {
+                            if (err) {
+                                return connection.rollback(() => {
+                                    connection.release();
+                                    resp.send(apiError(err));
+                                });
+                            }
+
+                            const order_id = orderResult.insertId;
+
+                            // 3️⃣ Insert into order_details
+                            const orderDetailsValues = menuList.map(item => [
+                                order_id,
+                                item.item_id,
+                                item.quantity
+                            ]);
+
+                            connection.query(
+                                `INSERT INTO order_details (order_id, item_id, quantity) VALUES ?`,
+                                [orderDetailsValues],
+                                (err) => {
+                                    if (err) {
+                                        return connection.rollback(() => {
+                                            connection.release();
+                                            resp.send(apiError(err));
+                                        });
+                                    }
+
+                                    // 4️⃣ Insert into bills
+                                    connection.query(
+                                        `INSERT INTO bills (order_id, table_charge, items_total, total_amount, status) 
+                                         VALUES (?, ?, ?, ?, 'Unpaid')`,
+                                        [order_id,charge,price, total_amount],
+                                        (err) => {
+                                            if (err) {
+                                                return connection.rollback(() => {
+                                                    connection.release();
+                                                    resp.send(apiError(err));
+                                                });
+                                            }
+
+                                            // ✅ Commit transaction
+                                            connection.commit(err => {
+                                                if (err) {
+                                                    return connection.rollback(() => {
+                                                        connection.release();
+                                                        resp.send(apiError(err));
+                                                    });
+                                                }
+
+                                                connection.release();
+                                                resp.send(apiSuccess("Order and bill created successfully"));
+                                            });
+                                        }
+                                    );
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        });
+    });
+});
+
+router.get("/orders",(req,resp)=>{
+    const id=req.user.id
+     const sql='SELECT b.booking_id ,b.resto_id, b.table_ids, b.start_time, b.end_time, b.status AS booking_status, r.name AS restaurant_name, r.location AS restaurant_location, o.order_id, od.detail_id, od.item_id, mi.item_name, mi.price, mi.category AS menu_category, od.quantity, rt.table_id, rt.capacity AS table_capacity, rt.charge AS table_charge, rt.category AS table_category, bl.bill_id, bl.table_charge, bl.items_total, bl.total_amount, bl.status AS bill_status FROM bookings b JOIN restaurants r ON b.resto_id = r.resto_id LEFT JOIN orders o ON b.booking_id = o.booking_id LEFT JOIN order_details od ON o.order_id = od.order_id LEFT JOIN menu_items mi ON od.item_id = mi.item_id LEFT JOIN bills bl ON o.order_id = bl.order_id LEFT JOIN restaurant_tables rt ON JSON_CONTAINS(b.table_ids, CAST(rt.table_id AS JSON)) WHERE b.customer_id = ?'
+      db.query(sql,[id],(err,result)=>{
+    if(err)
+        return resp.send(apiError(err))
+    console.log(result)
+    resp.send(apiSuccess(result))
+})
+});
+
 
 module.exports = router

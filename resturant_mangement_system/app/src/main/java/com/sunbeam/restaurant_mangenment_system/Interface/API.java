@@ -1,5 +1,8 @@
 package com.sunbeam.restaurant_mangenment_system.Interface;
 
+import com.sunbeam.restaurant_mangenment_system.Class.BookingTable;
+import com.sunbeam.restaurant_mangenment_system.Class.Item;
+import com.sunbeam.restaurant_mangenment_system.Class.Table;
 import com.sunbeam.restaurant_mangenment_system.Class.User;
 
 import java.util.List;
@@ -29,6 +32,12 @@ public interface API {
     @GET("/menu/resto/{resto_id}")
     public Call<ResponseBody> getMenu(@Header("Authorization") String token,@Path("resto_id") int resto_id);
 
+    @POST("/user/order/{resto_id}")
+    public Call<ResponseBody> BookingTable(@Header("Authorization") String token, @Path("resto_id") int resto_id,
+                                           @Body BookingTable bookingTable);
+
+    @GET("/user/orders")
+    public Call<ResponseBody> getBookings(@Header("Authorization") String token);
 
     @GET("/table/resto/{resto_id}")
     public Call<ResponseBody> getTables(@Header("Authorization") String token,@Path("resto_id") int resto_id);

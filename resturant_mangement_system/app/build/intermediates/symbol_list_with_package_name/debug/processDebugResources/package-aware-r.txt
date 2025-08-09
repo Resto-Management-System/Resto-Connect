@@ -3608,6 +3608,7 @@ id textTableID
 id textTitle
 id textTop
 id textTotalPrice
+id textView
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon

@@ -2,59 +2,35 @@ package com.sunbeam.restaurant_mangenment_system.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.sunbeam.restaurant_mangenment_system.Class.PrefsHelper;
 import com.sunbeam.restaurant_mangenment_system.R;
+import com.sunbeam.restaurant_mangenment_system.Utils.RetrofitClient;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyBookingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 public class MyBookingFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MyBookingFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyBookingFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyBookingFragment newInstance(String param1, String param2) {
-        MyBookingFragment fragment = new MyBookingFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    TextView textView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -62,5 +38,62 @@ public class MyBookingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_booking, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        textView=view.findViewById(R.id.textView);
+        getData();
+    }
+    public void  getData(){
+        PrefsHelper prefsHelper=new PrefsHelper();
+
+        String token=prefsHelper.getToken(getContext());
+
+        String BearerToken="Bearer"+" "+token;
+        RetrofitClient.getInstance().getApi().getBookings(BearerToken).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (!response.isSuccessful() || response.body() == null) {
+                        Toast.makeText(getContext(), "Server error or empty response", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    String json = response.body().string();
+                    Log.d("RAW_RESPONSE", json);
+
+                    JSONObject obj = new JSONObject(json);
+
+                    // ✅ Get data as JSONArray
+                    JSONArray dataArray = obj.getJSONArray("data");
+
+                    // Example: Loop through array
+                    for (int i = 0; i < dataArray.length(); i++) {
+                        JSONObject booking = dataArray.getJSONObject(i);
+                        String restaurantName = booking.getString("restaurant_name");
+                        String startTime = booking.getString("start_time");
+                        String endTime = booking.getString("end_time");
+
+                        Log.d("BOOKING_INFO"," "+booking);
+                    }
+
+                    Toast.makeText(getContext(), "Bookings found: " + dataArray.length(), Toast.LENGTH_LONG).show();
+
+                } catch (Exception e) {
+                    Log.e("PARSE_ERR", "Error parsing", e);
+                    Toast.makeText(getContext(), "Error parsing response", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("API_ERR", "Failed", t);
+                Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

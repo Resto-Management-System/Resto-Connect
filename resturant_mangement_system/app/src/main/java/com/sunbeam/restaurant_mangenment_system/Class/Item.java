@@ -10,17 +10,19 @@ public class Item implements Parcelable {
     private int resto_id;
     private String item_name;
     private int price;
+    private int quantity=1;
     private String category;
 
     public Item() {
     }
 
-    public Item(int item_id, int resto_id, String item_name, int price, String category) {
+    public Item(int item_id, int resto_id, String item_name, int price, String category,int quantity) {
         this.item_id = item_id;
         this.resto_id = resto_id;
         this.item_name = item_name;
         this.price = price;
         this.category = category;
+        this.quantity=quantity;
     }
 
     protected Item(Parcel in) {
@@ -29,6 +31,7 @@ public class Item implements Parcelable {
         item_name = in.readString();
         price = in.readInt();
         category = in.readString();
+        quantity=in.readInt();
     }
 
     public static final Creator<Item> CREATOR = new Creator<Item>() {
@@ -83,6 +86,14 @@ public class Item implements Parcelable {
         this.category = category;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -106,5 +117,6 @@ public class Item implements Parcelable {
         dest.writeString(item_name);
         dest.writeInt(price);
         dest.writeString(category);
+        dest.writeInt(quantity);
     }
 }
