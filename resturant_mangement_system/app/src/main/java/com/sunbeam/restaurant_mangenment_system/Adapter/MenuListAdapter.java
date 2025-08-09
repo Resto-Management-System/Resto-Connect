@@ -54,9 +54,9 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Item item = menuList.get(position);
-        holder.textItemName.setText(item.getItem_name());
-        holder.textItemCategory.setText("Category: " + item.getCategory());
-        holder.textItemPrice.setText("Price: ₹" + item.getPrice());
+        holder.textName.setText(item.getItem_name());
+        holder.textCategory.setText("Category: " + item.getCategory());
+        holder.textCharges.setText("Price: ₹" + item.getPrice());
 
         holder.itemView.setOnClickListener(v -> {
             if (isAddAction && addListener != null)
@@ -75,13 +75,13 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MyView
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textItemName, textItemCategory, textItemPrice;
+        TextView textTableID,textName,textCategory,textCapacity,textCharges;
         Button btnDelete;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            textItemName = itemView.findViewById(R.id.textItemName);
-            textItemCategory = itemView.findViewById(R.id.textItemCategory);
-            textItemPrice = itemView.findViewById(R.id.textItemPrice);
+            textName = itemView.findViewById(R.id.textName);
+            textCategory = itemView.findViewById(R.id.textCategory);
+            textCharges = itemView.findViewById(R.id.textCharges);
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
     }

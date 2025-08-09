@@ -56,7 +56,7 @@ public class RegisterCustomerActivity extends AppCompatActivity {
                     Log.d("RAW_RESPONSE", json);
                     JSONObject obj = new JSONObject(json);
                     String token = obj.getString("data");
-                    Toast.makeText(RegisterCustomerActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterCustomerActivity.this, "register successful!", Toast.LENGTH_SHORT).show();
                     // You can navigate to LoadActivity or Home screen here
                     Intent intent=new Intent(RegisterCustomerActivity.this,loginViewActivity.class);
                     startActivity(intent);

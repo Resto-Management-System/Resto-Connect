@@ -100,10 +100,6 @@ CREATE TABLE bookings (
     status enum('Booked', 'Cancelled', 'Completed')
 );
 
-
-
-
-
 -- 7. Orders
 CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,

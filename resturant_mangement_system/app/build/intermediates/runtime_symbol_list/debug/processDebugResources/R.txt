@@ -3301,6 +3301,7 @@ int id editLocation 0x7f0900b5
 int id editName 0x7f0900b6
 int id editPassword 0x7f0900b7
 int id editPhone 0x7f0900b8
+int id editTextDate2 0x7f09022d
 int id edit_query 0x7f0900b9
 int id edit_text_id 0x7f0900ba
 int id editrestoname 0x7f0900bb
@@ -3486,6 +3487,7 @@ int id pathRelative 0x7f09016e
 int id peekHeight 0x7f09016f
 int id percent 0x7f090170
 int id pin 0x7f090171
+int id placeOrder 0x7f09022c
 int id position 0x7f090172
 int id postLayout 0x7f090173
 int id pressed 0x7f090174
@@ -3594,9 +3596,6 @@ int id textCharges 0x7f09021c
 int id textEmail 0x7f0901d4
 int id textEnd 0x7f0901d5
 int id textID 0x7f09022a
-int id textItemCategory 0x7f090222
-int id textItemName 0x7f090223
-int id textItemPrice 0x7f090224
 int id textName 0x7f0901d7
 int id textPhone 0x7f0901d8
 int id textRegister 0x7f0901d9

@@ -24,10 +24,12 @@ id editLocation
 id editName
 id editPassword
 id editPhone
+id editTextDate2
 id editrestoname
 id layoutEmail
 id layoutPassword
 id main
+id placeOrder
 id profileFragmentContainer
 id recycleViewOrderedTable
 id recycleViewPlaceOrder
@@ -42,9 +44,6 @@ id textCategory
 id textCharges
 id textEmail
 id textID
-id textItemCategory
-id textItemName
-id textItemPrice
 id textName
 id textPhone
 id textRegister

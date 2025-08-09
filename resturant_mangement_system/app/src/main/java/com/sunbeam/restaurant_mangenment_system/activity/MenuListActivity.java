@@ -32,12 +32,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MenuListActivity extends AppCompatActivity {
+    RecyclerView recyclerViewMenuList,recyclerViewMenuListselected;
     int resto_id;
     List<Item> menuList,orderMenuList;
-    RecyclerView recyclerViewMenuList,recyclerViewMenuListselected;
+    MenuListAdapter availableAdapter;
+    MenuListAdapter orderedAdapter;
     TextView textTotalPrice,texttablePrice;
-    MenuListAdapter availableAdapter,orderedAdapter;
-    ArrayList<Table> selectedTables;
+    List<Table> selectedTables;
     Button btnOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,11 @@ public class MenuListActivity extends AppCompatActivity {
         menuList=new ArrayList<>();
         orderMenuList=new ArrayList<>();
 
-        availableAdapter=new MenuListAdapter(MenuListActivity.this,menuList,orderMenuList,true,item->{
+        availableAdapter=new MenuListAdapter(MenuListActivity.this
+                ,menuList,
+                orderMenuList
+                ,true
+                ,item->{
             menuList.remove(item);
             orderMenuList.add(item);
             availableAdapter.notifyDataSetChanged();
@@ -64,7 +69,12 @@ public class MenuListActivity extends AppCompatActivity {
             updateTotalPrice();
         },null);
 
-        orderedAdapter=new MenuListAdapter(MenuListActivity.this,menuList,orderMenuList,false,null,item -> {
+        orderedAdapter=new MenuListAdapter(MenuListActivity.this
+                ,orderMenuList
+                ,menuList
+                ,false
+                ,null
+                ,item -> {
            orderMenuList.remove(item);
            menuList.add(item);
            orderedAdapter.notifyDataSetChanged();
@@ -81,7 +91,7 @@ public class MenuListActivity extends AppCompatActivity {
         btnOrder.setOnClickListener(v -> {
             Intent intent=new Intent(MenuListActivity.this,PalceOrderActivity.class);
             intent.putExtra("resto_id",resto_id);
-            intent.putParcelableArrayListExtra("tables",selectedTables);
+            intent.putParcelableArrayListExtra("tables",new ArrayList<>(selectedTables));
             intent.putParcelableArrayListExtra("menu", new ArrayList<>(orderMenuList));
             startActivity(intent);
 
