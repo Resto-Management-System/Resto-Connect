@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Restaurant Management Logo">
+  <!-- Background -->
+  <rect width="64" height="64" fill="#FAFAFA" rx="8" />
+
+  <!-- Cloche dome with subtle chef hat bump -->
+  <path
+    d="M20 26 
+       C20 18 28 12 32 12 
+       C36 12 44 18 44 26 
+       C52 26 52 34 12 34 
+       C12 28 16 26 20 26 Z"
+    fill="#B22222"
+    stroke="#B22222"
+    stroke-width="2"
+  />
+
+  <!-- Chef hat bump on top center -->
+  <path
+    d="M28 12 
+       C28 8 32 6 36 8 
+       C38 9 40 12 38 14 
+       C36 16 30 14 28 12 Z"
+    fill="#B22222"
+  />
+
+  <!-- Cloche base -->
+  <rect x="12" y="34" width="40" height="8" rx="3" fill="#B22222" />
+
+  <!-- Rising bar chart inside cloche -->
+  <rect x="26" y="30" width="4" height="8" fill="#FFD700" rx="1" />
+  <rect x="32" y="26" width="4" height="12" fill="#FFD700" rx="1" />
+  <rect x="38" y="22" width="4" height="16" fill="#FFD700" rx="1" />
+</svg>

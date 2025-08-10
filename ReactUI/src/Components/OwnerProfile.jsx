@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 // Assuming you'll add these service functions in ../Services/users.js
 import { getOwnerDetails, updateOwnerProfile } from '../Services/users'; 
-import '../CSS/owner-profile.css'; // New CSS file for this page
+import '../CSS/owner-profile.css'; 
 
 const OwnerProfile = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const OwnerProfile = () => {
         return;
       }
 
-      setProfile(prev => ({ ...prev, userId: storedUser.id, })); // Set userId from session
+      setProfile(prev => ({ ...prev, userId: storedUser.id, })); // Setting userId from session
 
       try {
         setLoading(true);
@@ -47,15 +47,15 @@ const OwnerProfile = () => {
           name: data.name,
           email: data.email,
           phone: data.phone,
-          resto_name: data.resto_name || '', // Restaurant name might be directly in user or separate
-          location: data.location || '', // Location might be directly in user or separate
+          resto_name: data.resto_name || '',
+          location: data.location || '', 
         });
-        toast.success("Profile loaded successfully!");
+        //toast.success("Profile loaded successfully!");
       } catch (error) {
         console.error("Error fetching owner profile:", error);
         toast.error("Failed to load profile. " + (error.response?.data?.message || error.message));
         // Optionally redirect if profile cannot be loaded
-        // navigate('/owner-dashboard'); 
+        // navigate('/ownerdashboard'); 
       } finally {
         setLoading(false);
       }
@@ -72,7 +72,7 @@ const OwnerProfile = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Assuming updateOwnerProfile takes userId and the updated profile data
+   
       await updateOwnerProfile(profile.userId, profile); 
       toast.success("Profile updated successfully!");
     } catch (error) {

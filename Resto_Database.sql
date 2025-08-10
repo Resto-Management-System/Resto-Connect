@@ -26,7 +26,11 @@ CREATE TABLE restaurants (
     resto_id INT PRIMARY KEY AUTO_INCREMENT,
     owner_id INT,
     name VARCHAR(100),
-    document TEXT,
+    
+    license_document TEXT,  
+    id_card_document TEXT,
+    menu_document TEXT,
+    restaurant_images TEXT, -- Store a JSON string of image filenames
     location VARCHAR(100)
 );
 

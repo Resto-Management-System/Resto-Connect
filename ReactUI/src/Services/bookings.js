@@ -1,12 +1,14 @@
+// bookings.js
 import axios from "axios";
 import { baseUrl } from "./apiconfig"; // Ensure apiconfig.js is correct
 
 export async function getMyRestaurantBookings() {
-    const url = `${baseUrl}/bookings/my-restaurant`;
+    // The endpoint now needs to be protected, so it needs the token
+    const url = `${baseUrl}/resto/my-restaurant/bookings`;
     try {
         const resp = await axios.get(url, {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem('token')}`
+                Authorization: `bearer ${sessionStorage.getItem('token')}`
             }
         });
         if (resp.status !== 200) { throw new Error("Axios API call failed with status " + resp.status); }
@@ -20,7 +22,7 @@ export async function getMyRestaurantBookings() {
 }
 
 export async function updateBookingStatus(bookingId, newStatus) {
-    const url = `${baseUrl}/bookings/${bookingId}`;
+    const url = `${baseUrl}/resto/bookings/${bookingId}`;
     try {
         const resp = await axios.put(url, { status: newStatus }, {
             headers: {
@@ -39,7 +41,7 @@ export async function updateBookingStatus(bookingId, newStatus) {
 }
 
 export async function deleteBooking(bookingId) {
-    const url = `${baseUrl}/bookings/${bookingId}`;
+    const url = `${baseUrl}/resto/bookings/${bookingId}`;
     try {
         const resp = await axios.delete(url, {
             headers: {

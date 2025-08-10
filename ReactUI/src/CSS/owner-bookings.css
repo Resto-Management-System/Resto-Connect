@@ -1,19 +1,25 @@
+
 .bookings-container-new {
   padding: 30px;
-  background-color: #f5f7fa;
-  min-height: calc(100vh - 60px); /* Adjust based on header/footer height */
+  background-color: #f5f7fa; /* Light grey background for a clean feel */
+  min-height: 100vh; /* Ensures it takes up at least the full viewport height */
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif; /* Consistent, modern font */
 }
 
+/* Page title styling */
 .bookings-title-new {
   font-size: 2.5rem;
-  color: #2c3e50;
+  color: #2c3e50; /* Dark, professional text color */
   margin-bottom: 30px;
   text-align: center;
   font-weight: 700;
 }
 
-.loading-message, .error-message, .no-bookings-message {
+/* Styles for informational messages (loading, error, no bookings) */
+.loading-message,
+.error-message,
+.no-bookings-message {
   text-align: center;
   font-size: 1.2rem;
   color: #666;
@@ -25,61 +31,38 @@
   max-width: 600px;
 }
 
+/* Specific color for error messages */
 .error-message {
   color: #e74c3c;
 }
 
+/* Grid layout for the booking cards */
 .bookings-list-new {
   display: grid;
+  /* Creates a responsive grid of cards, each with a minimum width of 300px */
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 25px;
 }
 
+/* Styling for each individual booking card */
 .booking-card-new {
   background-color: #ffffff;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 25px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s ease-in-out;
 }
 
+/* Adds a subtle lift effect on hover */
 .booking-card-new:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-.booking-header-new {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.booking-header-new h3 {
-  font-size: 1.3rem;
-  color: #34495e;
-  margin: 0;
-}
-
-.booking-status-new {
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #fff;
-}
-
-/* Status specific colors */
-.status-pending { background-color: #f39c12; } /* Orange */
-.status-confirmed { background-color: #27ae60; } /* Green */
-.status-cancelled { background-color: #e74c3c; } /* Red */
-.status-completed { background-color: #3498db; } /* Blue */
-
+/* Styling for the content within the card */
 .booking-details-new p {
   margin: 8px 0;
   font-size: 0.95rem;
@@ -90,6 +73,7 @@
   color: #333;
 }
 
+/* Style for the 'Booked on' timestamp */
 .booking-created-at {
   font-size: 0.8rem;
   color: #888;
@@ -97,6 +81,7 @@
   text-align: right;
 }
 
+/* Container for actions like the status dropdown */
 .booking-actions-new {
   display: flex;
   gap: 10px;
@@ -105,6 +90,7 @@
   padding-top: 15px;
 }
 
+/* Styling for the status select dropdown */
 .status-select-new {
   flex-grow: 1;
   padding: 10px 15px;
@@ -116,48 +102,14 @@
   transition: border-color 0.2s ease;
 }
 
+/* Focus state for the dropdown */
 .status-select-new:focus {
-  border-color: #4a90e2;
+  border-color: #4a90e2; /* Blue border on focus */
   outline: none;
 }
 
-.delete-btn-new {
-  padding: 10px 15px;
-  background-color: #e74c3c;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.delete-btn-new:hover {
-  background-color: #c0392b;
-  transform: translateY(-2px);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .bookings-container-new {
-    padding: 20px;
-  }
-
-  .bookings-list-new {
-    grid-template-columns: 1fr; /* Stack cards on small screens */
-  }
-
-  .bookings-title-new {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-
-  .booking-actions-new {
-    flex-direction: column;
-  }
-
-  .status-select-new, .delete-btn-new {
-    width: 100%;
-  }
-}
+/* Styles for specific status options to add color indicators */
+.status-select-new option[value="pending"] { color: #f39c12; } /* Orange */
+.status-select-new option[value="confirmed"] { color: #27ae60; } /* Green */
+.status-select-new option[value="cancelled"] { color: #e74c3c; } /* Red */
+.status-select-new option[value="completed"] { color: #3498db; } /* Blue */

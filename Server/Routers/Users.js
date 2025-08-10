@@ -1,49 +1,84 @@
 const db = require("../utils/dbpool")
-const {apiSuccess, apiError} = require("../utils/apiresult")
-const {createToken} = require("../utils/jwtauth")
+const {apiSuccess, apiError} = require("../Utils/apiresult")
+const {createToken} = require("../Utils/jwtauth")
 const express = require("express")
 const bcrypt = require("bcrypt")
 const multer = require("multer");
 const router = express.Router()
 
-const upload = multer({dest: "Upload/"})
+// These users will bypass the database check.
+const admins = [
+    { email: 'nishi@gmail.com', password: 'admin1', user_id: 101 },
+    { email: 'aditya@gmail.com', password: 'admin2', user_id: 102 },
+    { email: 'sojwal@gmail.com', password: 'admin3', user_id: 103 },
+    { email: 'madhura@gmail.com', password: 'admin4', user_id: 104 }
+];
+
+//--add multer for file uploads------
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, "uploads/"),
+    filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+});
+const upload = multer({ storage });
 
 
-router.post("/signup/owner",upload.single("document"),(req,resp)=>{
-        const {name,email,passwd,phone,role,resto_name,location}=req.body
-        const documentname = req.file ? req.file.filename : null;
-        const encPasswd = bcrypt.hashSync(passwd, 10)
-        db.query("insert into users(name,email,password,phone,role) value(?,?,?,?,?)",[name,email,encPasswd,phone,role],(err,result)=>{
-            if(err)
-                return resp.send(apiError(err))
-            if(result.affectedRows==1){
-                const id=result.insertId;
-                db.query("insert into restaurants(Owner_id,name,document,location) value(?,?,?,?)",
-                    [id,resto_name,documentname,location],(err,re)=>{
-                    if(err)
-                        return resp.send(apiError(err))
-                    resp.send(apiSuccess({ message : "Restaurant registerd successfully", user_id: id }))
-                })
-            }   
+router.post("/signup/owner", upload.single("document"), (req, resp) => {
+    const { name, email, passwd, phone, role, resto_name, location } = req.body;
+
+    if (!name || !email || !passwd || !resto_name || !location) {
+        return resp.status(400).send(apiError("Missing required fields"));
+    }
+
+    const documentname = req.file ? req.file.filename : null;
+    const encPasswd = bcrypt.hashSync(passwd, 10);
+
+    db.query("INSERT INTO users(name,email,password,phone,role) VALUES (?,?,?,?,?)",
+        [name, email, encPasswd, phone, role], (err, result) => {
+
+            if (err) return resp.send(apiError(err));
+
+            const id = result.insertId;
+
+            db.query("INSERT INTO restaurants(owner_id, name, license_document, location) VALUES (?, ?, ?, ?)",
+                [id, resto_name, documentname, location], (err2, result2) => {
+
+                    if (err2) return resp.send(apiError(err2));
+                    resp.send(apiSuccess({ message: "Restaurant registered successfully", user_id: id }));
+                });
         });
 });
 
-// Users.js
-router.post("/upload-document/:userId", upload.single("document"), (req, resp) => {
+// Users.js ---document upload route
+router.post("/upload-document/:userId", upload.fields([
+    { name: "license", maxCount: 1 },
+    { name: "idCard", maxCount: 1 },
+    { name: "menu", maxCount: 1 },
+    { name: "restaurantImages", maxCount: 10 },
+]), (req, res) => {
     const userId = req.params.userId;
-    const documentname = req.file ? req.file.filename : null;
-    
-    if (!documentname) {
-        return resp.status(400).send(apiError("Document file not found"));
-    }
+    if (!req.files) return res.status(400).send(apiError("No files uploaded."));
 
-    // You need to update the restaurants table, not the users table
-    db.query("UPDATE restaurants SET document=? WHERE owner_id=?", [documentname, userId], (err, result) => {
-        if (err) {
-            return resp.status(500).send(apiError(err));
+    const license = req.files.license?.[0]?.filename || null;
+    const idCard = req.files.idCard?.[0]?.filename || null;
+    const menu = req.files.menu?.[0]?.filename || null;
+    const restaurantImages = req.files.restaurantImages?.map(f => f.filename) || [];
+
+    db.query(
+        `UPDATE restaurants 
+         SET license_document = ?, id_card_document = ?, menu_document = ?, restaurant_images = ? 
+         WHERE owner_id = ?`,
+        [license, idCard, menu, JSON.stringify(restaurantImages), userId],
+        (err, result) => {
+            if (err) {
+                console.error("DB error:", err);
+                return res.status(500).send(apiError("Database error"));
+            }
+            if (result.affectedRows === 0) {
+                return res.status(404).send(apiError("Restaurant not found"));
+            }
+            res.send(apiSuccess({ message: "Documents uploaded successfully" }));
         }
-        resp.send(apiSuccess("Document uploaded successfully"));
-    });
+    );
 });
 
 router.post("/signup/user",(req,resp)=>{
@@ -56,25 +91,56 @@ router.post("/signup/user",(req,resp)=>{
         })
 })
 
-router.post("/signin",(req,resp)=>{
-    const {email,passwd}=req.body
-    db.query("SELECT * FROM users WHERE email=?",[email],(err,result)=>{
-        if(err)
-            return resp.send(apiError(err))
-            //console.log("results: ", result)
-        if(result.length !== 1) // user with email not found
-            return resp.send(apiError("Invalid email"))
-        const dbUser = result[0]
-        const isMatching = bcrypt.compareSync(passwd, dbUser.password)
-            //console.log("is passwd matching: " , isMatching)
-        if(!isMatching) // password not matching
-            return resp.send(apiError("Invalid password"))
-            // create jwt token and add it in response
-        const token = createToken(dbUser)
-        resp.send(apiSuccess(token))
-    })
-})
+//--------------- User Sign-in API ---------------
 
+// router.post("/signin",(req,resp)=>{
+//     const {email,passwd}=req.body
+//     db.query("SELECT * FROM users WHERE email=?",[email],(err,result)=>{
+//         if(err)
+//             return resp.send(apiError(err))
+//             //console.log("results: ", result)
+//         if(result.length !== 1) // user with email not found
+//             return resp.send(apiError("Invalid email"))
+//         const dbUser = result[0]
+//         const isMatching = bcrypt.compareSync(passwd, dbUser.password)
+//             //console.log("is passwd matching: " , isMatching)
+//         if(!isMatching) // password not matching
+//             return resp.send(apiError("Invalid password"))
+//             // create jwt token and add it in response
+//         const token = createToken(dbUser)
+//         resp.send(apiSuccess(token))
+//     })
+// })
+
+router.post("/signin", (req, resp) => {
+    const { email, passwd } = req.body;
+
+    const adminUser = admins.find(admin => admin.email === email && admin.password === passwd);
+
+    // --- COMBINED ADMIN/OWNER LOGIN LOGIC ---
+    // First, check for the hardcoded admin credentials.
+    if (adminUser) {
+        // If an admin match is found, create a token with their info and return.
+        const user = { user_id: adminUser.user_id, role: 'admin' };
+        const token = createToken(user);
+        return resp.send(apiSuccess({ token, user }));
+    }
+
+    // If not the admin, proceed with the regular database query for other roles (owner, customer)
+    db.query("SELECT * FROM users WHERE email=?", [email], (err, result) => {
+        if (err) return resp.send(apiError(err));
+        if (result.length == 0) return resp.send(apiError("invalid login credentials"));
+
+        const user = result[0];
+        // Compare the provided password with the hashed password from the database
+        if (bcrypt.compareSync(passwd, user.password)) {
+            const token = createToken(user);
+            resp.send(apiSuccess({ token, user }));
+        } else {
+            resp.send(apiError("invalid login credentials"));
+        }
+    });
+});
 
 //get userbyid api
 
@@ -127,7 +193,7 @@ router.get("/getallusers",(req,resp)=>{
 //delete userbyid api
 
 router.delete("/deleteuserbyid",(req,resp)=>{
-    db.query("DELETE FROM users WHERE user_id=?",[req.params.id],(err,result)=>{
+    db.query("DELETE FROM users WHERE user_id=?", [req.params.id],(err,result)=>{
         if(err)
             return resp.send(apiError(err));
         resp.send(apiSuccess("user deleted successfully"));
@@ -137,17 +203,17 @@ router.delete("/deleteuserbyid",(req,resp)=>{
 
 //update user api
 
-router.put("/updatebyid",(req,resp)=>{
-    const{name,email,phone}=req.body;
-    db.query("UPDATE users SET name=? ,email=?,phone=?,WHERE user_id=?",
-        [name,email,phone,req.params.id],
-        (err,result)=>{
-            if(err)return resp.send(apiError(err));
-            resp.send(apiSuccess("user updated successfully"));
+// router.put("/updatebyid",(req,resp)=>{
+//     const{name,email,phone}=req.body;
+//     db.query("UPDATE users SET name=? ,email=?,phone=?,WHERE user_id=?",
+//         [name,email,phone,req.params.id],
+//         (err,result)=>{
+//             if(err)return resp.send(apiError(err));
+//             resp.send(apiSuccess("user updated successfully"));
 
-        });
+//         });
     
-});
+// });
 
 
 router.put("/updatebyid/:id", (req, resp) => {
@@ -165,6 +231,36 @@ router.put("/updatebyid/:id", (req, resp) => {
 
             // If the user is an owner, also update restaurant details
             if (role === 'owner') { // Check the role from the request body
+                db.query("UPDATE restaurants SET name=?, location=? WHERE Owner_id=?",
+                    [resto_name, location, userId],
+                    (err, restoResult) => {
+                        if (err) {
+                            console.error("Error updating restaurant:", err);
+                            return resp.status(500).send(apiError("Failed to update restaurant details."));
+                        }
+                        resp.send(apiSuccess("Profile and Restaurant details updated successfully"));
+                    });
+            } else {
+                resp.send(apiSuccess("Profile updated successfully"));
+            }
+        });
+});
+
+
+//----------------------------
+//update user api - consolidated into one correct route
+router.put("/updatebyid/:id", (req, resp) => {
+    const userId = req.params.id;
+    const { name, email, phone, resto_name, location, role } = req.body;
+
+    db.query("UPDATE users SET name=?, email=?, phone=? WHERE user_id=?",
+        [name, email, phone, userId],
+        (err, userResult) => {
+            if (err) {
+                console.error("Error updating user:", err);
+                return resp.status(500).send(apiError("Failed to update user."));
+            }
+            if (role === 'owner') {
                 db.query("UPDATE restaurants SET name=?, location=? WHERE Owner_id=?",
                     [resto_name, location, userId],
                     (err, restoResult) => {

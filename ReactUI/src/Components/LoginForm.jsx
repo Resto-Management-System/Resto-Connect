@@ -11,8 +11,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [passwd, setPasswd] = useState("");
   const navigate = useNavigate();
-  // Ensure AuthContext is correctly provided in a parent component (e.g., App.jsx)
-  const { setUser } = useContext(AuthContext); 
+  const { setUser } = useContext(AuthContext);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -21,41 +20,46 @@ const LoginForm = () => {
   const handlePasswdChange = (e) => setPasswd(e.target.value);
 
   const handleSignInClick = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
 
     try {
-      // userSignIn directly returns the JWT token string
-      const token = await userSignIn(email, passwd); 
+      // The userSignIn function now returns an object with 'token' and 'user'.
+      // We need to destructure it to get both values.
+      const responseData = await userSignIn(email, passwd);
+      const token = responseData.token;
+      const user = responseData.user;
 
       if (token) {
-        sessionStorage.setItem("token", token); // Store the received token
+        // Store the received token in sessionStorage
+        sessionStorage.setItem("token", token);
+        // Also store the user details
+        sessionStorage.setItem("user", JSON.stringify({name: user.name, role: user.role}));
 
-        // Decode the token to get user details, including the role
-        const decodedUser = jwtDecode(token);
+        // Decode the token to get the user's role and other details
+        const decodedToken = jwtDecode(token);
+        const userRole = decodedToken.role;
 
-        sessionStorage.setItem("user", JSON.stringify(decodedUser)); 
-        
-        // Update setUser with isAuthenticated, token, and the decoded user object
-        setUser({ isAuthenticated: true, token: token, user: decodedUser }); 
+        // Set the user in the global context
+        setUser({ token, role: userRole });
 
-        toast.success("Signed in successfully!");
+        toast.success(`Welcome, ${user.name}!`, { autoClose: 1500 });
 
-        // Role-based navigation
-        // Ensure the role casing matches what's in your JWT payload (e.g., 'owner' or 'Owner')
-        if (decodedUser.role === "owner") { 
-          navigate("/ownerdashboard"); // Navigate to owner's dashboard
-        } else if (decodedUser.role === "admin") {
-          navigate("/admin-dashboard"); // Navigate to admin's dashboard
+        // Navigate based on the user's role
+        if (userRole === "owner") {
+          navigate("/ownerdashboard");
+        } else if (userRole === "admin") {
+          navigate("/admin");
+        } else if (userRole === "customer") {
+          navigate("/customer");
         } else {
-          // Fallback for other roles or if role is not explicitly handled
-          navigate("/user"); 
+          // Fallback for other roles or unhandled cases
+          navigate("/");
         }
-      } else {
-        toast.error("An unexpected error occurred during sign-in: No token received.");
       }
     } catch (err) {
-      console.error("Sign-in error details:", err); // Log full error for debugging
-      const errorMessage = err.response?.data?.message || err.message || "An unexpected error occurred during sign-in.";
+      console.error("Login error:", err);
+      // The API error message might be in err.response.data.message
+      const errorMessage = err.response?.data?.message || err.message || "Failed to sign in.";
       toast.error(errorMessage);
     }
   };

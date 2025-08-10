@@ -79,7 +79,7 @@ export async function getOwnerDetails(userId) {
     try {
         const resp = await axios.get(url, {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem('token')}` // Include JWT token for authentication
+                Authorization: `bearer ${sessionStorage.getItem('token')}` // Include JWT token for authentication
             }
         });
 
@@ -109,7 +109,7 @@ export async function updateOwnerProfile(userId, profileData) {
     try {
         const resp = await axios.put(url, profileData, {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem('token')}`, // Include JWT token
+                Authorization: `bearer ${sessionStorage.getItem('token')}`, // Include JWT token
                 'Content-Type': 'application/json' // Ensure JSON content type for PUT
             }
         });

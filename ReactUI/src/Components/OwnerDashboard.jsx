@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link } from 'react-router'; // Using 'react-router-dom' for <Link>
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import '../CSS/owner-dashboard.css'; // This will be the NEW CSS file
@@ -11,24 +11,40 @@ const OwnerDashboard = () => {
   const [currentDateTime, setCurrentDateTime] = useState("");
 
   useEffect(() => {
-    const storedToken = sessionStorage.getItem('token');
-
-    if (storedToken) {
-      try {
-        const decoded = jwtDecode(storedToken);
-        setUserName(decoded.name || "Owner");
-        setUserRole(decoded.role || "Owner");
-      } catch (error) {
-        console.error("Failed to decode JWT token:", error);
-        toast.error("Session expired or invalid. Please log in again.");
-        handleSignOut();
+    //const storedToken = sessionStorage.getItem('token');
+    //-- Retrieve user details from sessionStorage-----------------------------------------------------------
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+    
+    if (storedUser) {
+      setUserName(storedUser?.name || "Owner");
+      setUserRole(storedUser?.role || "Owner")
+    } 
+    else 
+      {
+        toast.info("Please log in to access the dashboard.");
+        navigate('/login');
         return;
       }
-    } else {
-      toast.info("Please log in to access the dashboard.");
-      navigate('/login');
-      return;
-    }
+
+
+    // if (storedToken) {
+    //   try {
+    //     // Decode the token to get user details
+    //     const decoded = jwtDecode(storedToken);
+
+    //     setUserName(decoded.name || "Owner");
+    //     setUserRole(decoded.role || "Owner");
+    //   } catch (error) {
+    //     console.error("Failed to decode JWT token:", error);
+    //     toast.error("Session expired or invalid. Please log in again.");
+    //     handleSignOut();
+    //     return;
+    //   }
+    // } else {
+    //   toast.info("Please log in to access the dashboard.");
+    //   navigate('/login');
+    //   return;
+    // }
 
     const updateDateTime = () => {
       const now = new Date();
@@ -44,7 +60,9 @@ const OwnerDashboard = () => {
     };
 
     updateDateTime();
+    // Update the time every minute
     const intervalId = setInterval(updateDateTime, 60000);
+    // Cleanup function to clear the interval on component unmount
     return () => clearInterval(intervalId);
   }, [navigate]);
 
@@ -66,7 +84,7 @@ const OwnerDashboard = () => {
           <Link to="/owner/menu" className="nav-item">🍽️ Menu</Link>
           <Link to="/owner/tables" className="nav-item">🪑 Tables</Link>
           <Link to="/owner/reports" className="nav-item">📊 Reports</Link>
-          <Link to="/owner/settings" className="nav-item">⚙️ Settings</Link>
+          {/* The Settings link has been removed as per the requirement */}
         </nav>
         <div className="sidebar-footer">
           <Link to="/owner/profile" className="profile-btn">👤 Profile</Link>
@@ -97,7 +115,7 @@ const OwnerDashboard = () => {
           <div className="alert-new alert-warning-new">
             <span className="alert-icon-new">🔔</span>
             <div>
-              <strong>Reminder:</strong> Upcoming maintenance scheduled for Kitchen equipment on 15th Aug.
+              <strong>Reminder:</strong> Upcoming maintenance scheduled for Kitchen equipment on 20th Aug.
             </div>
           </div>
         </section>

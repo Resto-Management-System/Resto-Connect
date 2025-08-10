@@ -1,0 +1,240 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* ===== Basic Styles ===== */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-color: #f4f7f6;
+    line-height: 1.6;
+}
+
+.home-container {
+    overflow-x: hidden;
+}
+
+/* ===== Top CTA Bar ===== */
+.top-cta-bar {
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 2rem;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.top-cta-bar div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.top-cta-bar span {
+    font-weight: 500;
+}
+
+@media (max-width: 576px) {
+    .top-cta-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}
+
+/* ===== Hero Section ===== */
+.hero-section {
+    position: relative;
+    height: 50vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('../assets/bg-images/restoddodle.png') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: 0 1rem;
+}
+
+.main-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.cta-button {
+    text-decoration: none;
+    color: #fff;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 2px solid;
+}
+
+.cta-button.primary {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.cta-button.secondary {
+    background-color: transparent;
+    border-color: #fff;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Info Panels ===== */
+.info-panels {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 0;
+    gap: 3rem;
+}
+
+.panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.panel-image {
+    flex-basis: 50%;
+    max-width: 50%;
+    height: auto;
+    display: block;
+}
+
+.panel-content {
+    flex-basis: 50%;
+    padding: 2rem;
+    text-align: left;
+}
+
+.panel.customer-panel {
+    flex-direction: row;
+}
+
+.panel.owner-panel {
+    flex-direction: row-reverse;
+}
+
+.panel-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-bottom: 1rem;
+}
+
+.panel-text {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.qr-code {
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+}
+
+.panel-cta-button {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.panel-cta-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Footer ===== */
+.footer {
+    background-color: #2c3e50;
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 992px) {
+    .panel {
+        flex-direction: column !important;
+        text-align: center;
+    }
+    .panel-image {
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+    .panel-content {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    .cta-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .panel-title {
+        font-size: 1.8rem;
+    }
+    .panel-text {
+        font-size: 1rem;
+    }
+}

@@ -5,12 +5,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { createContext, useState } from "react";
-
+import SplashScreen from "./Components/SplashScreen"
 import UploadDocument from "./Components/UploadDocuments";
 import LoginForm from "./Components/LoginForm";
 import OwnerDashboard from "./components/OwnerDashboard";
 import Home from "./Components/Home";
-import RegistrationForm from "./Components/RegistrationForm";
+import RegistrationForm from "./Components/Registrationform";
 import OwnerProfile from "./Components/OwnerProfile";
 import OwnerBookings from "./Components/OwnerBookings";
 import AdminDashboard from "./Components/AdminDashboard";
@@ -27,6 +27,12 @@ const userJson = sessionStorage.getItem("user");
 
 function App() {
 	const [user, setUser] = useState(getUserFromSessionStorage());
+    const [showSplash, setShowSplash] = useState(true);
+
+  if (showSplash) {
+    return <SplashScreen onFinish={() => setShowSplash(false)} />;
+  
+}
 
 	return (
 		<div className="container">
