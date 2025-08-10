@@ -30,6 +30,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         this.restoList = restoList;
     }
 
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

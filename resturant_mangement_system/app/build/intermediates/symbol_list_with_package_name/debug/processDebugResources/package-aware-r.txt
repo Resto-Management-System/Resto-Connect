@@ -3498,6 +3498,7 @@ id progress_horizontal
 id radio
 id ratio
 id rectangles
+id recycleViewMyBooking
 id recycleViewOrderedTable
 id recycleViewPlaceOrder
 id recycleViewResto
@@ -3608,7 +3609,9 @@ id textTableID
 id textTitle
 id textTop
 id textTotalPrice
-id textView
+id textViewBookingID
+id textViewTotal
+id textViewrestoName
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -3859,6 +3862,7 @@ layout mtrl_picker_text_input_date
 layout mtrl_picker_text_input_date_range
 layout mtrl_search_bar
 layout mtrl_search_view
+layout my_booking_list
 layout notification_action
 layout notification_action_tombstone
 layout notification_template_custom_big

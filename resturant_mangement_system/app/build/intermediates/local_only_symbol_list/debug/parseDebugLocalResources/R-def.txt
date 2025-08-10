@@ -31,6 +31,7 @@ id layoutPassword
 id main
 id placeOrder
 id profileFragmentContainer
+id recycleViewMyBooking
 id recycleViewOrderedTable
 id recycleViewPlaceOrder
 id recycleViewResto
@@ -51,7 +52,9 @@ id textRestoName
 id textTableID
 id textTitle
 id textTotalPrice
-id textView
+id textViewBookingID
+id textViewTotal
+id textViewrestoName
 id texttablePrice
 id txtSelectedDocument
 id viewPager2
@@ -66,6 +69,7 @@ layout fragment_my_booking
 layout fragment_profile
 layout fragment_restaurant_list
 layout menu_list_item
+layout my_booking_list
 layout order_list
 layout resto_list
 layout table_list

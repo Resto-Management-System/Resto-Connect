@@ -3497,6 +3497,7 @@ int id progress_horizontal 0x7f090178
 int id radio 0x7f090179
 int id ratio 0x7f09017a
 int id rectangles 0x7f09017b
+int id recycleViewMyBooking 0x7f09022f
 int id recycleViewOrderedTable 0x7f090219
 int id recycleViewPlaceOrder 0x7f090229
 int id recycleViewResto 0x7f09017c
@@ -3607,7 +3608,9 @@ int id textTableID 0x7f09021d
 int id textTitle 0x7f0901de
 int id textTop 0x7f0901df
 int id textTotalPrice 0x7f09021f
-int id textView 0x7f09022e
+int id textViewBookingID 0x7f090230
+int id textViewTotal 0x7f090231
+int id textViewrestoName 0x7f090232
 int id text_input_end_icon 0x7f0901e0
 int id text_input_error_icon 0x7f0901e1
 int id text_input_start_icon 0x7f0901e2
@@ -3858,6 +3861,7 @@ int layout mtrl_picker_text_input_date 0x7f0c0064
 int layout mtrl_picker_text_input_date_range 0x7f0c0065
 int layout mtrl_search_bar 0x7f0c0066
 int layout mtrl_search_view 0x7f0c0067
+int layout my_booking_list 0x7f0c0079
 int layout notification_action 0x7f0c0068
 int layout notification_action_tombstone 0x7f0c0069
 int layout notification_template_custom_big 0x7f0c006a
