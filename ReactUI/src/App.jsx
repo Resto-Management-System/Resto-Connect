@@ -11,7 +11,7 @@ import LoginForm from "./Components/LoginForm";
 import OwnerDashboard from "./components/OwnerDashboard";
 import Home from "./Components/Home";
 import RegistrationForm from "./Components/Registrationform";
-import OwnerProfile from "./Components/OwnerProfile";
+// import OwnerProfile from "./Components/OwnerProfile";
 import OwnerBookings from "./Components/OwnerBookings";
 import AdminDashboard from "./Components/AdminDashboard";
 
@@ -47,7 +47,7 @@ function App() {
 					
 					{/* Route after login */}
 					<Route path="/ownerdashboard" element={<OwnerDashboard/>} />
-					<Route path="/owner/profile" element={<OwnerProfile />} />
+					{/* <Route path="/owner/profile" element={<OwnerProfile />} /> */}
 					
 					<Route path="/owner/bookings" element={<OwnerBookings />} />
 

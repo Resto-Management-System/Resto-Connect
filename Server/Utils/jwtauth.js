@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "Sunbeam@DMCFeb2025"; 
+const JWT_SECRET = "Sunbeam@DMCFeb2025";
 
 function createToken(user) {
     const payload = { id: user.user_id, role: user.role };
@@ -28,21 +28,17 @@ function jwtAuth(req, resp, next) {
     ];
 
     // Clean up the URL to match against the list.
-    const cleanUrl = req.url.split("?")[0].replace(/\/+$/, "");
+    const cleanUrl = req.url.split("?")[0].replace(/\/?$/, "");
 
-    // *** THE CRITICAL FIX ***
     // Check if the URL is in the non-protected list.
-    // If it is, we skip the rest of the function and proceed.
-    if (nonProtectedUrls.includes(cleanUrl) || cleanUrl.startsWith("/users/upload-document" )){
+    if (nonProtectedUrls.includes(cleanUrl) || cleanUrl.startsWith("/users/upload-document")) {
         console.log("Skipping JWT check for public route:", cleanUrl);
         return next();
     }
 
     // Now, if the code reaches this point, the URL IS protected.
-    // We must check for the authorization header.
     const authheader = req.headers.authorization;
     if (!authheader) {
-        // If there's no header, send a 401 response and stop the request.
         return resp.status(401).send("Unauthorized Access - No authorization header");
     }
 
@@ -57,12 +53,15 @@ function jwtAuth(req, resp, next) {
         return resp.status(403).send("Unauthorized Access - Invalid token");
     }
     
-    // If the token is valid, attach user info to the request object and continue.
-    req.user = { id: decoded.id, role: decoded.role };
+    // If the token is valid, attach the user's payload to the request object.
+    req.user = decoded;
+    
     next();
 }
 
+// CRITICAL: Export all three functions so they can be imported by other modules.
 module.exports = {
     createToken,
-    jwtAuth,
+    verifyToken,
+    jwtAuth
 };

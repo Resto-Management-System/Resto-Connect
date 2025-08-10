@@ -1,51 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router'; // Using 'react-router-dom' for <Link>
+import { useNavigate, Link } from 'react-router';
 import { toast } from 'react-toastify';
-import { jwtDecode } from 'jwt-decode';
-import '../CSS/owner-dashboard.css'; // This will be the NEW CSS file
+import '../CSS/owner-dashboard.css';
+import { FaBell } from 'react-icons/fa';
 
 const OwnerDashboard = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("User");
   const [userRole, setUserRole] = useState("Owner");
   const [currentDateTime, setCurrentDateTime] = useState("");
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([
+    { id: 1, message: "New booking from John Doe for 7 PM tonight!", isRead: false, timestamp: new Date() },
+    { id: 2, message: "Review added by Jane Smith: 'Great food and service!'", isRead: false, timestamp: new Date(Date.now() - 60000 * 30) },
+    { id: 3, message: "Your weekly revenue report is ready.", isRead: true, timestamp: new Date(Date.now() - 60000 * 120) },
+    { id: 4, message: "Table 5 is now available for booking.", isRead: false, timestamp: new Date(Date.now() - 60000 * 20) },
+  ]);
+
+  const unreadCount = notifications.filter(n => !n.isRead).length;
 
   useEffect(() => {
-    //const storedToken = sessionStorage.getItem('token');
-    //-- Retrieve user details from sessionStorage-----------------------------------------------------------
+    // ✅ Use stored user object instead of decoding JWT
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
-    
+
     if (storedUser) {
       setUserName(storedUser?.name || "Owner");
-      setUserRole(storedUser?.role || "Owner")
-    } 
-    else 
-      {
-        toast.info("Please log in to access the dashboard.");
-        navigate('/login');
-        return;
-      }
+      setUserRole(storedUser?.role || "Owner");
+    } else {
+      toast.info("Please log in to access the dashboard.");
+      navigate('/login');
+      return;
+    }
 
-
-    // if (storedToken) {
-    //   try {
-    //     // Decode the token to get user details
-    //     const decoded = jwtDecode(storedToken);
-
-    //     setUserName(decoded.name || "Owner");
-    //     setUserRole(decoded.role || "Owner");
-    //   } catch (error) {
-    //     console.error("Failed to decode JWT token:", error);
-    //     toast.error("Session expired or invalid. Please log in again.");
-    //     handleSignOut();
-    //     return;
-    //   }
-    // } else {
-    //   toast.info("Please log in to access the dashboard.");
-    //   navigate('/login');
-    //   return;
-    // }
-
+    // Date/time updater
     const updateDateTime = () => {
       const now = new Date();
       const options = {
@@ -60,9 +47,7 @@ const OwnerDashboard = () => {
     };
 
     updateDateTime();
-    // Update the time every minute
     const intervalId = setInterval(updateDateTime, 60000);
-    // Cleanup function to clear the interval on component unmount
     return () => clearInterval(intervalId);
   }, [navigate]);
 
@@ -73,9 +58,24 @@ const OwnerDashboard = () => {
     navigate('/login');
   };
 
+  const handleMarkAsRead = (id) => {
+    setNotifications(notifications.map(n => n.id === id ? { ...n, isRead: true } : n));
+  };
+
+  const formatDate = (date) => {
+    const options = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  };
+
   return (
     <div className="dashboard-layout-new">
-      {/* Sidebar for navigation */}
+      {/* Sidebar */}
       <aside className="dashboard-sidebar-new">
         <div className="sidebar-logo">Resto Connect</div>
         <nav className="sidebar-nav">
@@ -84,7 +84,6 @@ const OwnerDashboard = () => {
           <Link to="/owner/menu" className="nav-item">🍽️ Menu</Link>
           <Link to="/owner/tables" className="nav-item">🪑 Tables</Link>
           <Link to="/owner/reports" className="nav-item">📊 Reports</Link>
-          {/* The Settings link has been removed as per the requirement */}
         </nav>
         <div className="sidebar-footer">
           <Link to="/owner/profile" className="profile-btn">👤 Profile</Link>
@@ -92,7 +91,7 @@ const OwnerDashboard = () => {
         </div>
       </aside>
 
-      {/* Main content area */}
+      {/* Main Content */}
       <main className="dashboard-main-content-new">
         <header className="main-header-new">
           <div className="header-left">
@@ -100,9 +99,39 @@ const OwnerDashboard = () => {
             <p className="current-date-time">{currentDateTime}</p>
           </div>
           <div className="header-right">
+            <div className="notification-icon-container" onClick={() => setShowNotifications(!showNotifications)}>
+              <FaBell className="notification-icon" />
+              {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
+            </div>
             <span className="user-role-new">{userRole.toUpperCase()}</span>
           </div>
         </header>
+
+        {/* Notifications Dropdown */}
+        {showNotifications && (
+          <div className="notifications-dropdown">
+            <h3 className="dropdown-title">Notifications</h3>
+            {notifications.length === 0 ? (
+              <p className="no-notifications">No new notifications.</p>
+            ) : (
+              <ul className="notification-list">
+                {notifications.map((notification) => (
+                  <li key={notification.id} className={`notification-item ${notification.isRead ? 'read' : 'unread'}`}>
+                    <div className="notification-content">
+                      <span className="notification-message">{notification.message}</span>
+                      <span className="notification-timestamp">{formatDate(notification.timestamp)}</span>
+                    </div>
+                    {!notification.isRead && (
+                      <button onClick={() => handleMarkAsRead(notification.id)} className="mark-as-read-btn">
+                        Mark as Read
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
 
         {/* Alerts Section */}
         <section className="alerts-section-new">
@@ -148,7 +177,7 @@ const OwnerDashboard = () => {
           </div>
         </section>
 
-        {/* Main Content Panels */}
+        {/* Main Panels */}
         <div className="main-panels-grid-new">
           <div className="panel-new large-panel">
             <h2>Revenue Trend (Last 6 Months)</h2>
@@ -182,7 +211,7 @@ const OwnerDashboard = () => {
           </div>
         </div>
 
-        {/* Sidebar-like Panels within Main Content */}
+        {/* Secondary Panels */}
         <div className="secondary-panels-grid-new">
           <div className="panel-new">
             <h2>Key Business Metrics</h2>

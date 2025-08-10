@@ -11,14 +11,14 @@ app.use(cors());
 app.use(bodyParser.json());
 const userRouter=require("./Routers/Users")
 const restoRouter=require("./Routers/Resto")
-//const tableRouter=require("./Routers/Table")
+
+const adminRouter=require("./Routers/Admin")
+const tableRouter=require("./Routers/Table")
 
 
 //const menuRouter=require("./Routers/Menu")
-//const bookingsRouter=require("./Routers/Bookings")
-//const adminRouter=require("./Routers/Admin")
 
-const adminRouter=require("./Routers/Admin")
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,14 +32,14 @@ app.use('/uploads', express.static('uploads'));
 
 //--Protected Routes--//
 app.use("/resto",jwtAuth, restoRouter);
-//app.use("/table",jwtAuth, tableRouter);
+app.use("/table",jwtAuth, tableRouter);
 
 
 
 //app.use('/Upload', express.static('Upload'));
 
 
-//app.use("/bookings", bookingsRouter);
+
 
 
 // Basic root route (optional)

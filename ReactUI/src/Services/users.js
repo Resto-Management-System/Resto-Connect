@@ -73,63 +73,56 @@ export async function uploadDocumentForOwner(formData, userId) {
 	}
 }
 
-
+// ========== GET OWNER DETAILS ==========
 export async function getOwnerDetails(userId) {
-    const url = `${baseUrl}/users/userbyid/${userId}`; // Assuming this endpoint exists and returns full user details
-    try {
-        const resp = await axios.get(url, {
-            headers: {
-                Authorization: `bearer ${sessionStorage.getItem('token')}` // Include JWT token for authentication
-            }
-        });
+  const url = `${baseUrl}/users/getbyid/${userId}`;
+  try {
+    const resp = await axios.get(url, {
+      headers: { Authorization: `bearer ${sessionStorage.getItem("token")}` },
+    });
 
-        if (resp.status !== 200) {
-            throw new Error("Axios API call failed with status " + resp.status);
-        }
+    if (resp.status !== 200)
+      throw new Error(`Axios API call failed with status ${resp.status}`);
 
-        const result = resp.data;
+    const result = resp.data;
+    if (result.status !== "success")
+      throw new Error(result.message || "API returned an error");
 
-        if (result.status !== "success") {
-            const errorMessage = typeof result.message === 'object' 
-                ? JSON.stringify(result.message) 
-                : (result.message || "API returned an error");
-            throw new Error(errorMessage);
-        }
+    return result.data;
+  } catch (err) {
+    console.error("Error fetching owner details:", err);
+    throw err;
+  }
+}
 
-        return result.data; // This should be the user/owner object
-    } catch (err) {
-        console.error("Error fetching owner details:", err);
-        throw err;
-    }
+// ========== UPDATE OWNER PROFILE ==========
+export async function updateOwnerProfile(userId, profileData) {
+  const url = `${baseUrl}/users/updatebyid/${userId}`;
+  try {
+    const resp = await axios.put(url, profileData, {
+      headers: {
+        Authorization: `bearer ${sessionStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (resp.status !== 200)
+      throw new Error(`Axios API call failed with status ${resp.status}`);
+
+    const result = resp.data;
+    if (result.status !== "success")
+      throw new Error(result.message || "API returned an error");
+
+    return result.data;
+  } catch (err) {
+    console.error("Error updating owner profile:", err);
+    throw err;
+  }
 }
 
 
-export async function updateOwnerProfile(userId, profileData) {
-    const url = `${baseUrl}/users/updatebyid/${userId}`; // Assuming this endpoint exists and updates user details
-    try {
-        const resp = await axios.put(url, profileData, {
-            headers: {
-                Authorization: `bearer ${sessionStorage.getItem('token')}`, // Include JWT token
-                'Content-Type': 'application/json' // Ensure JSON content type for PUT
-            }
-        });
-
-        if (resp.status !== 200) {
-            throw new Error("Axios API call failed with status " + resp.status);
-        }
-
-        const result = resp.data;
-
-        if (result.status !== "success") {
-            const errorMessage = typeof result.message === 'object' 
-                ? JSON.stringify(result.message) 
-                : (result.message || "API returned an error");
-            throw new Error(errorMessage);
-        }
-
-        return result.data; // Should be a success message
-    } catch (err) {
-        console.error("Error updating owner profile:", err);
-        throw err;
-    }
+// ========== GET CURRENT LOGGED-IN USER INFO ==========
+export function getLoggedInUser() {
+  const storedUser = JSON.parse(sessionStorage.getItem("user"));
+  return storedUser || null;
 }
