@@ -1,6 +1,6 @@
 const db = require("../utils/dbpool")
 const {apiSuccess, apiError} = require("../Utils/apiresult")
-const {createToken} = require("../Utils/jwtauth")
+const {createToken, jwtAuth} = require("../Utils/jwtauth")
 const express = require("express")
 const bcrypt = require("bcrypt")
 const multer = require("multer");
@@ -161,20 +161,8 @@ router.post("/signin", (req, resp) => {
 
 //get userbyid api
 
-router.get("/userbyid/:id",(req,resp)=>{
-    const id =req.params.id;
-    db.query("SELECT user_id,name,email,phone,role FROM users WHERE user_id=?",[id],(err,result)=>{
-       if(err)
-        return resp.send(apiError(err));
-       if(result.length===0)
-        //console.log("Requested ID-", req.params.id);
-        return resp.send(apiError("user not found"));
-        resp.send(apiSuccess(result[0]))
-    });
-});
-
-router.get("/userbyid/:id", (req, resp) => {
-    const id = req.params.id;
+router.get("/profile/:id", jwtAuth, (req, resp) => {
+    const id = req.user.id;
     // Modified query to LEFT JOIN with restaurants to get resto_name and location if user is an owner
     const query = `
         SELECT 
@@ -184,7 +172,7 @@ router.get("/userbyid/:id", (req, resp) => {
         LEFT JOIN restaurants r ON u.user_id = r.Owner_id
         WHERE u.user_id = ?`;
 
-    db.query(query, [id], (err, result) => {
+    db.query(query, [userId], (err, result) => {
        if (err) {
         console.error("Error fetching user by ID:", err);
         return resp.status(500).send(apiError("Failed to fetch user."));
@@ -233,34 +221,44 @@ router.delete("/deleteuserbyid",(req,resp)=>{
 // });
 
 
-router.put("/updatebyid/:id", (req, resp) => {
-    const userId = req.params.id;
-    const {name, email, phone, resto_name, location, role} = req.body; // Get role to conditionally update restaurant info
+// New PUT route to update owner profile.
+// This is a protected route.
+router.put("/updateprofile", jwtAuth, (req, res) => {
+  const userId = req.user.id;
+  const { name, phone, resto_name, location } = req.body;
 
-    // Update user table
-    db.query("UPDATE users SET name=?, email=?, phone=? WHERE user_id=?",
-        [name, email, phone, userId],
-        (err, userResult) => {
-            if (err) {
-                console.error("Error updating user:", err);
-                return resp.status(500).send(apiError("Failed to update user."));
-            }
+  // Update user details
+  const userUpdateQuery = `
+    UPDATE users
+    SET name = ?, phone = ?
+    WHERE user_id = ?;
+  `;
+  db.query(userUpdateQuery, [name, phone, userId], (err, userResult) => {
+    if (err) {
+      console.error("Error updating user profile:", err);
+      return res.status(500).send(apiError("Failed to update user profile."));
+    }
 
-            // If the user is an owner, also update restaurant details
-            if (role === 'owner') { // Check the role from the request body
-                db.query("UPDATE restaurants SET name=?, location=? WHERE Owner_id=?",
-                    [resto_name, location, userId],
-                    (err, restoResult) => {
-                        if (err) {
-                            console.error("Error updating restaurant:", err);
-                            return resp.status(500).send(apiError("Failed to update restaurant details."));
-                        }
-                        resp.send(apiSuccess("Profile and Restaurant details updated successfully"));
-                    });
-            } else {
-                resp.send(apiSuccess("Profile updated successfully"));
-            }
-        });
+    // Now, update restaurant details (only if the user is an owner)
+    // We get the role from the JWT token via jwtAuth middleware.
+    if (req.user.role === 'owner') {
+      const restoUpdateQuery = `
+        UPDATE restaurants
+        SET resto_name = ?, location = ?
+        WHERE owner_id = ?;
+      `;
+      db.query(restoUpdateQuery, [resto_name, location, userId], (err, restoResult) => {
+        if (err) {
+          console.error("Error updating restaurant details:", err);
+          return res.status(500).send(apiError("Failed to update restaurant details."));
+        }
+        return res.send(apiSuccess("Profile updated successfully."));
+      });
+    } else {
+      // If the user is not an owner, we just send a success message after updating their user profile.
+      return res.send(apiSuccess("Profile updated successfully."));
+    }
+  });
 });
 
 

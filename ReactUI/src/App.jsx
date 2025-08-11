@@ -14,6 +14,7 @@ import RegistrationForm from "./Components/Registrationform";
 //import OwnerProfile from "./Components/OwnerProfile";
 import RestaurantManager from "./Components/RestaurantManager";
 import OwnerBookings from "./Components/OwnerBookings";
+import OwnerTable from "./Components/OwnerTable";
 import AdminDashboard from "./Components/AdminDashboard";
 import ReviewList from "./Components/ReviewList";
 
@@ -49,9 +50,12 @@ function App() {
 					
 					{/* Route after login */}
 					<Route path="/ownerdashboard" element={<OwnerDashboard/>} />
-					{/* <Route path="/owner/profile" element={<OwnerProfile />} /> */}
-					
+					{/* <Route path="/owner/profile" element={<OwnerProfile />} />
+					 */}
 					<Route path="/owner/bookings" element={<OwnerBookings />} />
+					<Route path="/owner/tables" element={<OwnerTable />} />
+					
+					{/* Admin routes */}
 
 					<Route path ="admin" element={<AdminDashboard/>} />
 					<Route path="/admin/restaurants" element={<RestaurantManager />} />

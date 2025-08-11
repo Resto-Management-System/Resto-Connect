@@ -29,72 +29,62 @@
 //   const [isSaving, setIsSaving] = useState(false);
 
 //   useEffect(() => {
-//     const fetchProfile = async () => {
-//       // Get user and token directly from session storage.
+//     const fetchProfileAndMetrics = async () => {
 //       const storedUser = JSON.parse(sessionStorage.getItem('user'));
 //       const storedToken = sessionStorage.getItem('token');
       
-//       // ✅ CRITICAL FIX: Extract the userId from the storedUser object
-//       const userId = storedUser?.userId;
-
 //       // Basic authentication check
-//       if (!storedUser || storedUser.role !== 'owner' || !storedToken || !userId) {
+//       if (!storedUser || storedUser.role !== 'owner' || !storedToken) {
 //         toast.error("Unauthorized access. Please log in as an owner.");
 //         navigate('/login');
 //         return;
 //       }
-
-//       setProfile(prev => ({ 
-//         ...prev, 
-//         role: storedUser.role, 
-//         userId: userId,
-//       }));
-
+      
 //       try {
 //         setLoading(true);
-//         // ✅ Pass the userId to the service function
-//         const data = await getOwnerDetails(userId, storedToken);
-//         setProfile(prev => ({
-//           ...prev,
-//           name: data.name,
-//           email: data.email,
-//           phone: data.phone,
-//           resto_name: data.resto_name,
-//           location: data.location,
-//         }));
-//         setMetrics({
-//           totalBookings: data.totalBookings,
-//           averageRating: data.averageRating,
-//           numberOfTables: data.numberOfTables
-//         });
-//         toast.success("Profile loaded successfully!", { autoClose: 1500 });
+//         // Call the service function to get profile details
+//         const profileData = await getOwnerDetails();
+//         setProfile(profileData);
+        
+//         // Assuming there's a separate service function to get metrics
+//         // We'll create a dummy one for now, but you would replace this with a real API call.
+//         const metricsData = {
+//           totalBookings: 45,
+//           averageRating: 4.5,
+//           numberOfTables: 12
+//         };
+//         setMetrics(metricsData);
+
+//         toast.success("Profile and metrics loaded!", { autoClose: 1500 });
 //       } catch (err) {
-//         console.error("Error fetching owner profile:", err);
-//         toast.error("Failed to fetch profile details.");
+//         console.error("Error fetching profile or metrics:", err);
+//         toast.error("Failed to load profile. Please try again.");
 //       } finally {
 //         setLoading(false);
 //       }
 //     };
 
-//     fetchProfile();
+//     fetchProfileAndMetrics();
 //   }, [navigate]);
 
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
-//     setProfile(prev => ({ ...prev, [name]: value }));
+//     setProfile(prevProfile => ({
+//       ...prevProfile,
+//       [name]: value
+//     }));
 //   };
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     setIsSaving(true);
-//     const storedToken = sessionStorage.getItem('token');
-    
 //     try {
-//       await updateOwnerProfile(profile.userId, profile, storedToken);
-//       toast.success("Profile updated successfully!");
+//       // Call the service function to update the profile
+//       const response = await updateOwnerProfile(profile);
+//       toast.success(response.message || "Profile updated successfully!");
 //     } catch (err) {
 //       console.error("Error updating profile:", err);
-//       toast.error("Failed to update profile.");
+//       toast.error("Failed to update profile. " + err.message);
 //     } finally {
 //       setIsSaving(false);
 //     }
@@ -108,7 +98,8 @@
 //     <div className="profile-container-new">
 //       <div className="profile-card-new">
 //         <h2 className="profile-title-new">My Profile</h2>
-//         <form onSubmit={handleSubmit} className="profile-form-new">
+//         <form className="profile-form-new" onSubmit={handleSubmit}>
+//           {/* User Details Section */}
 //           <div className="form-section-new">
 //             <h3>Personal Information</h3>
 //             <div className="form-group-new">
@@ -129,8 +120,8 @@
 //                 id="email"
 //                 name="email"
 //                 value={profile.email}
-//                 readOnly
 //                 disabled
+//                 // Email is disabled because it is typically a primary key for authentication and shouldn't be changed easily.
 //               />
 //             </div>
 //             <div className="form-group-new">
@@ -147,7 +138,7 @@
 //           </div>
 
 //           {/* Restaurant Details (only for owner role) */}
-//           {profile.role === 'owner' && ( 
+//           {profile.role === 'owner' && (
 //             <div className="form-section-new">
 //               <h3>Restaurant Information</h3>
 //               <div className="form-group-new">

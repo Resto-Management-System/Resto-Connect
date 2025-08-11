@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 
 const mockRestaurants = [
   { id: 1, name: "Spice Villa", location: "Mumbai", status: "active", owner: "Ravi", rating: 4.2 },

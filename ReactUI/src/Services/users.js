@@ -76,7 +76,7 @@ export async function uploadDocumentForOwner(formData, userId) {
 ///--------------------profile update--------------------///
 // Service function to get owner details by ID
 export async function getOwnerDetails(userId, token) {
-    const url = `${baseUrl}/users/profilebyid/${userId}`;
+    const url = `${baseUrl}/users/profile`;
     try {
         const resp = await axios.get(url, {
             headers: {
@@ -100,7 +100,7 @@ export async function getOwnerDetails(userId, token) {
 
 // Service function to update owner profile
 export async function updateOwnerProfile(userId, profileData, token) {
-    const url = `${baseUrl}/users/updatebyid/${userId}`;
+    const url = `${baseUrl}/users/updateprofile`;
     try {
         const resp = await axios.put(url, profileData, {
             headers: {
