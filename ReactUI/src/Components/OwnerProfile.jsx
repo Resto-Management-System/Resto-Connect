@@ -1,7 +1,7 @@
+// // OwnerProfile.jsx
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router';
 // import { toast } from 'react-toastify';
-// // Assuming you'll add these service functions in ../Services/users.js
 // import { getOwnerDetails, updateOwnerProfile } from '../Services/users'; 
 // import '../CSS/owner-profile.css'; 
 
@@ -13,49 +13,64 @@
 //     name: '',
 //     email: '',
 //     phone: '',
+//     role: '',
 //     resto_name: '',
 //     location: '',
 //   });
 
+//   // State for business metrics
+//   const [metrics, setMetrics] = useState({
+//     totalBookings: 0,
+//     averageRating: 0,
+//     numberOfTables: 0,
+//   });
+
+//   // State to track if the data is being saved
+//   const [isSaving, setIsSaving] = useState(false);
+
 //   useEffect(() => {
 //     const fetchProfile = async () => {
+//       // Get user and token directly from session storage.
 //       const storedUser = JSON.parse(sessionStorage.getItem('user'));
 //       const storedToken = sessionStorage.getItem('token');
+      
+//       // ✅ CRITICAL FIX: Extract the userId from the storedUser object
+//       const userId = storedUser?.userId;
 
-//       //debug
-//       console.log("OwnerProfile: storedUser from sessionStorage:", storedUser);
-//       console.log("OwnerProfile: storedToken from sessionStorage:", storedToken);
-//       if (storedUser) {
-//         console.log("OwnerProfile: storedUser.role:", storedUser.role);
-//       }
-
-//       //--------------------------------------------------//
-//       if (!storedUser || storedUser.role !== 'owner' || !storedToken) {
+//       // Basic authentication check
+//       if (!storedUser || storedUser.role !== 'owner' || !storedToken || !userId) {
 //         toast.error("Unauthorized access. Please log in as an owner.");
 //         navigate('/login');
 //         return;
 //       }
 
-//       setProfile(prev => ({ ...prev, userId: storedUser.id, })); // Setting userId from session
+//       setProfile(prev => ({ 
+//         ...prev, 
+//         role: storedUser.role, 
+//         userId: userId,
+//       }));
 
 //       try {
 //         setLoading(true);
-//         // Assuming getOwnerDetails takes userId and potentially token for auth
-//         const data = await getOwnerDetails(storedUser.id); 
-//         setProfile({
-//           userId: data.user_id, // Ensure these keys match your backend response
+//         // ✅ Pass the userId to the service function
+//         const data = await getOwnerDetails(userId, storedToken);
+//         setProfile(prev => ({
+//           ...prev,
 //           name: data.name,
 //           email: data.email,
 //           phone: data.phone,
-//           resto_name: data.resto_name || '',
-//           location: data.location || '', 
+//           resto_name: data.resto_name,
+//           location: data.location,
+//         }));
+//         setMetrics({
+//           totalBookings: data.totalBookings,
+//           averageRating: data.averageRating,
+//           numberOfTables: data.numberOfTables
 //         });
-//         //toast.success("Profile loaded successfully!");
-//       } catch (error) {
-//         console.error("Error fetching owner profile:", error);
-//         toast.error("Failed to load profile. " + (error.response?.data?.message || error.message));
-//         // Optionally redirect if profile cannot be loaded
-//         // navigate('/ownerdashboard'); 
+//         toast.success("Profile loaded successfully!", { autoClose: 1500 });
+//       } catch (err) {
+//         console.error("Error fetching owner profile:", err);
+//         toast.error("Failed to fetch profile details.");
 //       } finally {
 //         setLoading(false);
 //       }
@@ -65,42 +80,39 @@
 //   }, [navigate]);
 
 //   const handleChange = (e) => {
-//     setProfile({ ...profile, [e.target.name]: e.target.value });
+//     const { name, value } = e.target;
+//     setProfile(prev => ({ ...prev, [name]: value }));
 //   };
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-//     setLoading(true);
+//     setIsSaving(true);
+//     const storedToken = sessionStorage.getItem('token');
+    
 //     try {
-   
-//       await updateOwnerProfile(profile.userId, profile); 
+//       await updateOwnerProfile(profile.userId, profile, storedToken);
 //       toast.success("Profile updated successfully!");
-//     } catch (error) {
-//       console.error("Error updating owner profile:", error);
-//       toast.error("Failed to update profile. " + (error.response?.data?.message || error.message));
+//     } catch (err) {
+//       console.error("Error updating profile:", err);
+//       toast.error("Failed to update profile.");
 //     } finally {
-//       setLoading(false);
+//       setIsSaving(false);
 //     }
 //   };
 
 //   if (loading) {
-//     return (
-//       <div className="profile-container-new loading-state">
-//         <p>Loading profile...</p>
-//       </div>
-//     );
+//     return <div className="loading-message-new">Loading profile...</div>;
 //   }
 
 //   return (
 //     <div className="profile-container-new">
 //       <div className="profile-card-new">
-//         <h2 className="profile-title-new">Profile Settings</h2>
+//         <h2 className="profile-title-new">My Profile</h2>
 //         <form onSubmit={handleSubmit} className="profile-form-new">
-//           {/* Personal Details */}
 //           <div className="form-section-new">
 //             <h3>Personal Information</h3>
 //             <div className="form-group-new">
-//               <label htmlFor="name">Full Name:</label>
+//               <label htmlFor="name">Name:</label>
 //               <input
 //                 type="text"
 //                 id="name"
@@ -117,9 +129,8 @@
 //                 id="email"
 //                 name="email"
 //                 value={profile.email}
-//                 onChange={handleChange}
-//                 required
-//                 disabled // Email is often not directly editable
+//                 readOnly
+//                 disabled
 //               />
 //             </div>
 //             <div className="form-group-new">
@@ -136,7 +147,7 @@
 //           </div>
 
 //           {/* Restaurant Details (only for owner role) */}
-//           {profile.role === 'owner' && ( // Added conditional rendering based on role from JWT
+//           {profile.role === 'owner' && ( 
 //             <div className="form-section-new">
 //               <h3>Restaurant Information</h3>
 //               <div className="form-group-new">
@@ -165,12 +176,27 @@
 //           )}
 
 //           <div className="profile-actions-new">
-//             <button type="submit" className="save-btn-new">Save Changes</button>
+//             <button type="submit" className="save-btn-new" disabled={isSaving}>
+//               {isSaving ? 'Saving...' : 'Save Changes'}
+//             </button>
 //             <button type="button" className="cancel-btn-new" onClick={() => navigate('/ownerdashboard')}>
 //               Cancel
 //             </button>
 //           </div>
 //         </form>
+
+//         {/* Business Metrics Section */}
+//         {profile.role === 'owner' && (
+//             <div className="metrics-section-new">
+//                 <h3>Business Metrics</h3>
+//                 <ul className="metrics-list-new">
+//                     <li>Total Bookings <span>{metrics.totalBookings}</span></li>
+//                     <li>Average Rating <span>{metrics.averageRating} / 5</span></li>
+//                     <li>Number of Tables <span>{metrics.numberOfTables}</span></li>
+//                 </ul>
+//             </div>
+//         )}
+
 //       </div>
 //     </div>
 //   );

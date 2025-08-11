@@ -11,9 +11,11 @@ import LoginForm from "./Components/LoginForm";
 import OwnerDashboard from "./components/OwnerDashboard";
 import Home from "./Components/Home";
 import RegistrationForm from "./Components/Registrationform";
-// import OwnerProfile from "./Components/OwnerProfile";
+//import OwnerProfile from "./Components/OwnerProfile";
+import RestaurantManager from "./Components/RestaurantManager";
 import OwnerBookings from "./Components/OwnerBookings";
 import AdminDashboard from "./Components/AdminDashboard";
+import ReviewList from "./Components/ReviewList";
 
 
 
@@ -51,7 +53,10 @@ function App() {
 					
 					<Route path="/owner/bookings" element={<OwnerBookings />} />
 
-					<Route path ="admin-dashboard" element={<AdminDashboard/>} />
+					<Route path ="admin" element={<AdminDashboard/>} />
+					<Route path="/admin/restaurants" element={<RestaurantManager />} />
+					<Route path="/admin/reviews" element={<ReviewList />} />
+					
 				</Routes>
 			</AuthContext.Provider>
 		</div>

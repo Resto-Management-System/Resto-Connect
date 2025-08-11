@@ -93,54 +93,71 @@ router.post("/signup/user",(req,resp)=>{
 
 //--------------- User Sign-in API ---------------
 
-// router.post("/signin",(req,resp)=>{
-//     const {email,passwd}=req.body
-//     db.query("SELECT * FROM users WHERE email=?",[email],(err,result)=>{
-//         if(err)
-//             return resp.send(apiError(err))
-//             //console.log("results: ", result)
-//         if(result.length !== 1) // user with email not found
-//             return resp.send(apiError("Invalid email"))
-//         const dbUser = result[0]
-//         const isMatching = bcrypt.compareSync(passwd, dbUser.password)
-//             //console.log("is passwd matching: " , isMatching)
-//         if(!isMatching) // password not matching
-//             return resp.send(apiError("Invalid password"))
-//             // create jwt token and add it in response
-//         const token = createToken(dbUser)
-//         resp.send(apiSuccess(token))
-//     })
-// })
-
 router.post("/signin", (req, resp) => {
     const { email, passwd } = req.body;
 
+    // Check for admin first
     const adminUser = admins.find(admin => admin.email === email && admin.password === passwd);
 
-    // --- COMBINED ADMIN/OWNER LOGIN LOGIC ---
-    // First, check for the hardcoded admin credentials.
     if (adminUser) {
-        // If an admin match is found, create a token with their info and return.
-        const user = { user_id: adminUser.user_id, role: 'admin' };
+        const user = {
+            user_id: adminUser.user_id,
+            name: email.split('@')[0], // or a proper name if you want
+            email: adminUser.email,
+            role: 'admin'
+        };
         const token = createToken(user);
         return resp.send(apiSuccess({ token, user }));
     }
 
-    // If not the admin, proceed with the regular database query for other roles (owner, customer)
-    db.query("SELECT * FROM users WHERE email=?", [email], (err, result) => {
+    // For non-admins, fetch from DB
+    db.query("SELECT user_id, name, email, phone, role, password FROM users WHERE email=?", [email], (err, result) => {
         if (err) return resp.send(apiError(err));
-        if (result.length == 0) return resp.send(apiError("invalid login credentials"));
+        if (result.length == 0) return resp.send(apiError("Invalid login credentials"));
 
-        const user = result[0];
-        // Compare the provided password with the hashed password from the database
-        if (bcrypt.compareSync(passwd, user.password)) {
-            const token = createToken(user);
-            resp.send(apiSuccess({ token, user }));
+        const dbUser = result[0];
+
+        if (bcrypt.compareSync(passwd, dbUser.password)) {
+            // Remove password before sending
+            delete dbUser.password;
+            const token = createToken(dbUser);
+            resp.send(apiSuccess({ token, user: dbUser }));
         } else {
-            resp.send(apiError("invalid login credentials"));
+            resp.send(apiError("Invalid login credentials"));
         }
     });
 });
+
+
+// router.post("/signin", (req, resp) => {
+//     const { email, passwd } = req.body;
+
+//     const adminUser = admins.find(admin => admin.email === email && admin.password === passwd);
+
+//     // --- COMBINED ADMIN/OWNER LOGIN LOGIC ---
+//     // First, check for the hardcoded admin credentials.
+//     if (adminUser) {
+//         // If an admin match is found, create a token with their info and return.
+//         const user = { user_id: adminUser.user_id, role: 'admin' };
+//         const token = createToken(user);
+//         return resp.send(apiSuccess({ token, user }));
+//     }
+
+//     // If not the admin, proceed with the regular database query for other roles (owner, customer)
+//     db.query("SELECT * FROM users WHERE email=?", [email], (err, result) => {
+//         if (err) return resp.send(apiError(err));
+//         if (result.length == 0) return resp.send(apiError("invalid login credentials"));
+
+//         const user = result[0];
+//         // Compare the provided password with the hashed password from the database
+//         if (bcrypt.compareSync(passwd, user.password)) {
+//             const token = createToken(user);
+//             resp.send(apiSuccess({ token, user }));
+//         } else {
+//             resp.send(apiError("invalid login credentials"));
+//         }
+//     });
+// });
 
 //get userbyid api
 

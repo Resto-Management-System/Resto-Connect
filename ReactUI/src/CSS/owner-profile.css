@@ -1,168 +1,129 @@
-General container for the profile page
+General Layout and Container
 .profile-container-new {
+  font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align to top, not center vertically */
+  align-items: center;
   min-height: 100vh;
-  background-color: #f5f7fa; /* Match dashboard background */
-  padding: 40px 20px; /* Add padding for smaller screens */
-  box-sizing: border-box; /* Include padding in element's total width and height */
-}
-
-/* Loading state styling */
-.profile-container-new.loading-state {
-  align-items: center; /* Center vertically when loading */
-  font-size: 1.2rem;
-  color: #666;
-}
-
-/* Card containing the profile form */
-.profile-card-new {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background-color: #f0f2f5;
   padding: 30px;
+}
+
+.profile-card-new {
   width: 100%;
-  max-width: 700px; /* Max width for readability */
-  box-sizing: border-box;
+  max-width: 800px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .profile-title-new {
-  font-size: 2.2rem;
-  color: #2c3e50; /* Dark blue-grey */
-  margin-bottom: 25px;
-  text-align: center;
+  font-size: 2.5rem;
   font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-/* Form sections (Personal Info, Restaurant Info) */
-.form-section-new {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.form-section-new:last-of-type {
-  border-bottom: none; /* No border for the last section */
-  margin-bottom: 0;
-  padding-bottom: 0;
+/* Form Sections and Inputs */
+.profile-form-new {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .form-section-new h3 {
   font-size: 1.5rem;
-  color: #4a90e2; /* Primary blue */
-  margin-bottom: 20px;
-  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 15px;
 }
 
-/* Individual form group (label + input) */
 .form-group-new {
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
 
 .form-group-new label {
   display: block;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #555;
   margin-bottom: 8px;
-  font-weight: 500;
 }
 
-.form-group-new input[type="text"],
-.form-group-new input[type="email"],
-.form-group-new input[type="tel"] {
+.form-group-new input {
   width: 100%;
   padding: 12px 15px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
   font-size: 1rem;
-  color: #333;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.2s ease;
 }
 
-.form-group-new input[type="text"]:focus,
-.form-group-new input[type="email"]:focus,
-.form-group-new input[type="tel"]:focus {
+.form-group-new input:focus {
   border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
   outline: none;
 }
 
-/* Styling for disabled email input */
-.form-group-new input[disabled] {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
-  color: #888;
-}
-
-/* Action buttons */
+/* Buttons and Actions */
 .profile-actions-new {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: flex-end;
   gap: 15px;
   margin-top: 30px;
 }
 
-.save-btn-new,
-.cancel-btn-new {
+.profile-actions-new button {
   padding: 12px 25px;
-  border: none;
-  border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
+  border-radius: 8px;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .save-btn-new {
-  background-color: #4a90e2; /* Primary blue */
-  color: #ffffff;
+  background-color: #2ecc71; /* Green for save */
+  color: #fff;
 }
 
 .save-btn-new:hover {
-  background-color: #3a7bd5; /* Darker blue */
+  background-color: #27ae60;
   transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
 }
 
 .cancel-btn-new {
-  background-color: #e0e0e0; /* Light grey */
-  color: #555;
+  background-color: #e74c3c; /* Red for cancel */
+  color: #fff;
 }
 
 .cancel-btn-new:hover {
-  background-color: #d0d0d0; /* Darker grey */
+  background-color: #c0392b;
   transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .profile-container-new {
-    padding: 20px 15px;
-  }
-
   .profile-card-new {
-    padding: 20px;
+    padding: 25px;
+    gap: 20px;
   }
 
   .profile-title-new {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+    font-size: 2rem;
   }
 
   .form-section-new h3 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+    font-size: 1.2rem;
   }
 
   .profile-actions-new {
-    flex-direction: column; /* Stack buttons on small screens */
+    flex-direction: column;
     align-items: stretch;
-    gap: 10px;
-  }
-
-  .save-btn-new,
-  .cancel-btn-new {
-    width: 100%;
   }
 }
