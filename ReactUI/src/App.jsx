@@ -17,6 +17,8 @@ import OwnerBookings from "./Components/OwnerBookings";
 import OwnerTable from "./Components/OwnerTable";
 import AdminDashboard from "./Components/AdminDashboard";
 import ReviewList from "./Components/ReviewList";
+import OwnerMenu from "./Components/OwnerMenu";
+
 
 
 
@@ -54,6 +56,7 @@ function App() {
 					 */}
 					<Route path="/owner/bookings" element={<OwnerBookings />} />
 					<Route path="/owner/tables" element={<OwnerTable />} />
+					<Route path="/owner/menu" element={<OwnerMenu />} />
 					
 					{/* Admin routes */}
 
